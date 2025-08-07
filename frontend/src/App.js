@@ -48,10 +48,10 @@ function App() {
           </p>
           
           <div className="tech-stack">
-            <span className="tech-tag">React</span>
-            <span className="tech-tag">Flask</span>
-            <span className="tech-tag">PyTorch</span>
-            <span className="tech-tag">PostgreSQL</span>
+            <span className="tech-tag">Frontend Web Dev</span>
+            <span className="tech-tag">Backend Web Dev</span>
+            <span className="tech-tag">Software Engineering</span>
+            <span className="tech-tag">Cloud Computing</span>
             <span className="tech-tag">Bayesian ML</span>
           </div>
         </div>

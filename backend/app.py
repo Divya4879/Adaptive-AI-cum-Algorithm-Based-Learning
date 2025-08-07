@@ -38,11 +38,11 @@ def get_next_question():
     # For now, return a sample question
     sample_question = {
         "question_id": 1,
-        "question_text": "What is 2 + 2?",
+        "question_text": "What is the correct HTML tag for the largest heading?",
         "difficulty_level": 3,
-        "options": ["2", "3", "4", "5"],
-        "correct_answer": "4",
-        "subject": "mathematics"
+        "options": ["<h1>", "<h6>", "<header>", "<head>"],
+        "correct_answer": "<h1>",
+        "subject": "frontend_web_dev"
     }
     
     return jsonify({
@@ -96,7 +96,7 @@ def get_student_dashboard(student_id):
         "cognitive_load_trend": [0.2, 0.3, 0.4, 0.6, 0.5, 0.3, 0.2],
         "difficulty_progression": [3, 4, 4, 5, 4, 5, 6],
         "session_duration": 1200,  # seconds
-        "subjects_covered": ["mathematics", "science"],
+        "subjects_covered": ["frontend_web_dev", "backend_web_dev", "software_engineering", "cloud_computing"],
         "recommendations": [
             "Take a 5-minute break to reduce cognitive load",
             "Current difficulty level is optimal for learning"
