@@ -630,16 +630,16 @@ From concept to implementation, every aspect demonstrates the highest level of c
 
 **Hackathon Submission**: This project was created specifically for AlgoFest Hackathon 2025. All code and algorithms are original work developed during the hackathon period.
 
-**Attribution**: If you use or build upon this work, please credit "Adaptive AI Tutor - AlgoFest Hackathon 2025 Submission by [Divya](github.com/Divya4879)"
+**Attribution**: If you use or build upon this work, please credit "Adaptive AI Tutor - AlgoFest Hackathon 2025 Submission by [Divya](https://github.com/Divya4879)"
 
 ---
 
 ## 🎉 Acknowledgments
 
 **Special Thanks**:
-- **AlgoFest Hackathon 2025 Organizers & Devpost** for creating this incredible platform where algorithms truly ignite innovation
-- **Hermann Ebbinghaus & Educational Psychology Pioneers** whose forgetting curve research inspired these spaced repetition algorithms
-- **Leitner System Creators** for the foundational spaced repetition methodology I enhanced
+- **AlgoFest Hackathon 2025 Organizers & Devpost** for this incredible hackathon.
+- **Hermann Ebbinghaus & Educational Psychology Pioneers** whose forgetting curve research inspired these spaced repetition algorithms.
+- **Leitner System Creators** for the foundational spaced repetition methodology I enhanced.
 
 ---
 
