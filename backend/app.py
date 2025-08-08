@@ -6,7 +6,6 @@ Each level gets its specific 5 questions, shuffled, with randomized options
 
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from flask_cors import CORS
 import json
 import time
 import random
@@ -14,9 +13,7 @@ from datetime import datetime
 import pandas as pd
 
 app = Flask(__name__)
-sed -i '/app = Flask(__name__)/a from flask_cors import CORS\nCORS(app, origins=["*"], methods=["GET", "POST", "OPTIONS"], allow_headers=["Content-Type"])' app.py
 CORS(app, origins=["*"])  # Allow all origins for demo
-CORS(app)
 
 # Global state
 questions_cache = None
@@ -319,11 +316,10 @@ def get_progress(student_id):
     except Exception as e:
         return jsonify({"success": False, "error": str(e)}), 500
 
+# Production configuration for Render
 if __name__ == '__main__':
-    print("🚀 Starting Simple Adaptive AI Tutor...")
-    print("✅ Fixed level questions - same 5 questions per level")
-    print("✅ Shuffled questions within each level")
-    print("✅ Randomized answer options")
+    print("🚀 Starting Adaptive AI Tutor - AlgoFest 2025...")
+    print("✅ Modified Leitner System + Adaptive Learning")
     
     if load_questions():
         print("✅ Questions loaded successfully")
@@ -331,12 +327,8 @@ if __name__ == '__main__':
         print("❌ Failed to load questions")
         exit(1)
     
-    print("🌐 Server starting on http://localhost:5000")
-    app.run(debug=True, host='0.0.0.0', port=5000)
-
-# Production configuration for Render
-if __name__ == '__main__':
     import os
     port = int(os.environ.get('PORT', 5000))
     debug = os.environ.get('FLASK_ENV') != 'production'
+    print(f"🌐 Server starting on port {port}")
     app.run(host='0.0.0.0', port=port, debug=debug)
