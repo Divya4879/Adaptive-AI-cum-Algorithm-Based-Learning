@@ -218,7 +218,7 @@
         }
     </style>
     <script src="all-questions-complete.js"></script>
-    <script src="user-data-manager.js"></script>
+    <script src="user-data-manager-fixed.js"></script>
     <script src="app-engine.js"></script>
     <script src="config.js"></script>
     <script src="debug-helper.js"></script>
@@ -278,18 +278,26 @@
         };
 
         function loadSubjects() {
-            const progress = JSON.parse(localStorage.getItem('adaptive_tutor_progress') || '{}');
+            // Wait for user data manager to be available
+            if (!window.userDataManager) {
+                setTimeout(loadSubjects, 100);
+                return;
+            }
+
+            const stats = window.userDataManager.getAllStats();
+            console.log('📊 Loading subjects with stats:', stats);
             const grid = document.getElementById('subjects-grid');
 
             grid.innerHTML = Object.entries(subjects).map(([id, subject]) => {
-                const subjectProgress = progress[id] || { 
-                    current_level: 1, 
-                    questions_answered: 0, 
-                    total_correct: 0 
+                const subjectStats = stats[id] || {
+                    currentLevel: 1,
+                    totalQuestions: 0,
+                    correctAnswers: 0,
+                    masteredQuestions: 0
                 };
                 
-                const accuracy = subjectProgress.questions_answered > 0 ? 
-                    Math.round((subjectProgress.total_correct / subjectProgress.questions_answered) * 100) : 0;
+                const accuracy = subjectStats.totalQuestions > 0 ? 
+                    Math.round((subjectStats.correctAnswers / subjectStats.totalQuestions) * 100) : 0;
 
                 return `
                     <div class="subject-card" data-subject="${id}">
@@ -304,14 +312,14 @@
                         <div class="level-section">
                             <div class="level-title">
                                 <span>Progress</span>
-                                <span class="current-level">Level ${subjectProgress.current_level}</span>
+                                <span class="current-level">Level ${subjectStats.currentLevel}</span>
                             </div>
                             <div class="level-progress">
                                 ${Array.from({length: 10}, (_, i) => {
                                     const level = i + 1;
                                     let className = 'level-dot';
-                                    if (level < subjectProgress.current_level) className += ' completed';
-                                    else if (level === subjectProgress.current_level) className += ' current';
+                                    if (level < subjectStats.currentLevel) className += ' completed';
+                                    else if (level === subjectStats.currentLevel) className += ' current';
                                     return `<div class="${className}">${level}</div>`;
                                 }).join('')}
                             </div>
@@ -323,7 +331,7 @@
                                 <div class="stat-label">Questions</div>
                             </div>
                             <div class="stat">
-                                <div class="stat-value">${subjectProgress.questions_answered}</div>
+                                <div class="stat-value">${subjectStats.totalQuestions || 0}</div>
                                 <div class="stat-label">Answered</div>
                             </div>
                             <div class="stat">
@@ -333,7 +341,7 @@
                         </div>
 
                         <button class="start-button">
-                            Start Level ${subjectProgress.current_level} Quiz
+                            Start Level ${subjectStats.currentLevel} Quiz
                         </button>
                     </div>
                 `;
