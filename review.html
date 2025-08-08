@@ -6,28 +6,32 @@
     <title>Review Wrong Answers - Adaptive AI Tutor</title>
     <style>
         :root {
-            --primary: #0a1628;
-            --secondary: #1e3a5f;
+            --primary: #1a365d;
+            --secondary: #2d3748;
             --accent: #4fd1c7;
             --text: #f7fafc;
-            --text-muted: #cbd5e0;
+            --background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             --glass: rgba(30, 58, 95, 0.15);
             --border: rgba(77, 209, 199, 0.2);
-            --error: #f56565;
-            --success: #48bb78;
+            --correct: #48bb78;
+            --wrong: #f56565;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--background);
             color: var(--text);
             min-height: 100vh;
         }
 
         .container {
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 2rem;
         }
@@ -36,39 +40,41 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 3rem;
+            margin-bottom: 2rem;
         }
 
         .back-button {
             background: var(--glass);
+            backdrop-filter: blur(15px);
             border: 1px solid var(--border);
             color: var(--text);
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
             text-decoration: none;
+            padding: 1rem 2rem;
+            border-radius: 15px;
+            font-weight: 600;
             transition: all 0.3s ease;
         }
 
         .back-button:hover {
-            border-color: var(--accent);
+            background: rgba(77, 209, 199, 0.1);
             transform: translateY(-2px);
         }
 
         .page-title {
-            font-size: 2.5rem;
+            font-size: 3rem;
             font-weight: 800;
-            background: linear-gradient(135deg, var(--accent) 0%, #81e6d9 100%);
+            background: linear-gradient(135deg, #4fd1c7 0%, #81e6d9 100%);
+            background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-align: center;
-            flex: 1;
         }
 
         .stats-section {
             background: var(--glass);
             backdrop-filter: blur(15px);
             border: 1px solid var(--border);
-            border-radius: 16px;
+            border-radius: 20px;
             padding: 2rem;
             margin-bottom: 2rem;
         }
@@ -84,28 +90,24 @@
         }
 
         .stat-value {
-            font-size: 2.5rem;
+            font-size: 3rem;
             font-weight: 800;
-            color: var(--error);
+            color: var(--accent);
             margin-bottom: 0.5rem;
         }
 
         .stat-label {
-            color: var(--text-muted);
-            font-size: 1rem;
-        }
-
-        .subject-sections {
-            display: grid;
-            gap: 2rem;
+            font-size: 1.1rem;
+            opacity: 0.8;
         }
 
         .subject-section {
             background: var(--glass);
             backdrop-filter: blur(15px);
             border: 1px solid var(--border);
-            border-radius: 16px;
+            border-radius: 20px;
             padding: 2rem;
+            margin-bottom: 2rem;
         }
 
         .subject-header {
@@ -113,6 +115,8 @@
             align-items: center;
             gap: 1rem;
             margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
         }
 
         .subject-icon {
@@ -120,98 +124,107 @@
         }
 
         .subject-title {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             font-weight: 700;
+            color: var(--accent);
         }
 
-        .wrong-count {
-            background: var(--error);
-            color: white;
-            padding: 0.25rem 0.75rem;
-            border-radius: 12px;
+        .subject-stats {
+            font-size: 1rem;
+            opacity: 0.8;
+            margin-left: auto;
+        }
+
+        .question-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .question-number {
+            background: var(--accent);
+            color: var(--primary);
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            font-weight: 700;
             font-size: 0.9rem;
-            font-weight: 600;
         }
 
-        .questions-list {
-            display: grid;
-            gap: 1.5rem;
-        }
-
-        .question-item {
-            background: rgba(245, 101, 101, 0.1);
-            border: 1px solid rgba(245, 101, 101, 0.3);
-            border-radius: 12px;
-            padding: 1.5rem;
+        .question-timestamp {
+            font-size: 0.9rem;
+            opacity: 0.7;
         }
 
         .question-text {
-            font-size: 1.1rem;
+            font-size: 1.3rem;
             font-weight: 600;
-            margin-bottom: 1rem;
-            color: var(--text);
+            margin-bottom: 2rem;
+            line-height: 1.6;
         }
 
-        .answer-comparison {
+        .options-grid {
             display: grid;
-            gap: 0.75rem;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
         }
 
-        .answer-row {
+        .option {
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .option.correct {
+            background: rgba(72, 187, 120, 0.2);
+            border-color: var(--correct);
+            color: var(--correct);
+            font-weight: 600;
+        }
+
+        .option.wrong {
+            background: rgba(245, 101, 101, 0.2);
+            border-color: var(--wrong);
+            color: var(--wrong);
+            font-weight: 600;
+        }
+
+        .option.neutral {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .answer-summary {
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 1rem;
-            padding: 0.75rem;
-            border-radius: 8px;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            font-size: 0.95rem;
         }
 
         .your-answer {
-            background: rgba(245, 101, 101, 0.2);
-            border: 1px solid var(--error);
+            color: var(--wrong);
         }
 
         .correct-answer {
-            background: rgba(72, 187, 120, 0.2);
-            border: 1px solid var(--success);
-        }
-
-        .answer-label {
-            font-weight: 600;
-            min-width: 100px;
-        }
-
-        .answer-text {
-            flex: 1;
-        }
-
-        .retry-section {
-            text-align: center;
-            margin-top: 3rem;
-        }
-
-        .retry-button {
-            background: linear-gradient(135deg, var(--accent) 0%, #81e6d9 100%);
-            color: var(--primary);
-            border: none;
-            padding: 1.2rem 2.5rem;
-            border-radius: 12px;
-            font-size: 1.1rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .retry-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(77, 209, 199, 0.4);
+            color: var(--correct);
         }
 
         .empty-state {
             text-align: center;
             padding: 4rem 2rem;
-            color: var(--text-muted);
         }
 
         .empty-icon {
@@ -220,24 +233,52 @@
         }
 
         .empty-title {
-            font-size: 1.5rem;
+            font-size: 2rem;
             font-weight: 700;
+            color: var(--accent);
             margin-bottom: 1rem;
         }
 
         .empty-message {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
+            opacity: 0.8;
             line-height: 1.6;
+        }
+
+        .retry-section {
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .retry-button {
+            background: linear-gradient(135deg, #4fd1c7 0%, #81e6d9 100%);
+            color: var(--primary);
+            text-decoration: none;
+            padding: 1rem 2rem;
+            border-radius: 15px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .retry-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(79, 209, 199, 0.3);
         }
 
         @media (max-width: 768px) {
             .container { padding: 1rem; }
-            .header { flex-direction: column; gap: 1rem; }
             .page-title { font-size: 2rem; }
+            .header { flex-direction: column; gap: 1rem; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .question-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
         }
     </style>
     <script src="all-questions-complete.js"></script>
-    <script src="app-engine.js"></script>
+    <script src="user-data-manager.js"></script>
+    <script src="user-data-manager.js"></script>
+    <script src="app-engine-enhanced.js"></script>
     <script src="config.js"></script>
     <script src="debug-helper.js"></script>
 </head>
@@ -255,6 +296,7 @@
             </ul>
         </div>
     </nav>
+
     <div class="container">
         <div class="header">
             <a href="index.html" class="back-button">← Dashboard</a>
@@ -270,11 +312,15 @@
                 </div>
                 <div class="stat-item">
                     <div class="stat-value" id="subjects-count">0</div>
-                    <div class="stat-label">Subjects</div>
+                    <div class="stat-label">Subjects with Wrong Answers</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-value" id="accuracy-drop">0%</div>
-                    <div class="stat-label">Accuracy Impact</div>
+                    <div class="stat-value" id="total-solved">0</div>
+                    <div class="stat-label">Total Questions Solved</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="overall-accuracy">0%</div>
+                    <div class="stat-label">Overall Accuracy</div>
                 </div>
             </div>
         </div>
@@ -296,32 +342,44 @@
             'cloud_computing': { name: 'Cloud Computing', icon: '☁️' }
         };
 
+        function formatTimestamp(timestamp) {
+            const date = new Date(timestamp);
+            return date.toLocaleDateString() + ' ' + date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+        }
+
         function loadWrongAnswers() {
-            const wrongAnswers = JSON.parse(localStorage.getItem('wrong_answers') || '{}');
+            // Wait for user data manager to be available
+            if (!window.userDataManager) {
+                setTimeout(loadWrongAnswers, 100);
+                return;
+            }
+
+            const userStats = window.userDataManager.getUserStats();
+            const wrongQuestions = window.userDataManager.getWrongQuestions();
             const reviewContent = document.getElementById('review-content');
             
-            // Calculate stats
+            // Update stats
             let totalWrong = 0;
             let subjectsWithWrong = 0;
             
-            for (const subject in wrongAnswers) {
-                if (wrongAnswers[subject].length > 0) {
-                    totalWrong += wrongAnswers[subject].length;
+            Object.values(wrongQuestions).forEach(questions => {
+                if (questions.length > 0) {
+                    totalWrong += questions.length;
                     subjectsWithWrong++;
                 }
-            }
+            });
             
-            // Update stats
             document.getElementById('total-wrong').textContent = totalWrong;
             document.getElementById('subjects-count').textContent = subjectsWithWrong;
-            document.getElementById('accuracy-drop').textContent = totalWrong > 0 ? Math.round((totalWrong / (totalWrong + 10)) * 100) + '%' : '0%';
+            document.getElementById('total-solved').textContent = userStats.totalQuestionsSolved;
+            document.getElementById('overall-accuracy').textContent = Math.round(userStats.overallAccuracy) + '%';
             
             if (totalWrong === 0) {
                 // Show empty state
                 reviewContent.innerHTML = `
                     <div class="empty-state">
                         <div class="empty-icon">🎉</div>
-                        <div class="empty-title">Great Job!</div>
+                        <div class="empty-title">Perfect Performance!</div>
                         <div class="empty-message">
                             You haven't answered any questions incorrectly yet.<br>
                             Keep up the excellent work!
@@ -331,46 +389,64 @@
                 return;
             }
             
-            // Generate review sections
-            const sectionsHTML = Object.entries(wrongAnswers)
+            // Generate review sections for each subject
+            const sectionsHTML = Object.entries(wrongQuestions)
                 .filter(([subject, questions]) => questions.length > 0)
                 .map(([subject, questions]) => {
                     const subjectInfo = subjects[subject];
                     
-                    const questionsHTML = questions.map(q => `
-                        <div class="question-item">
-                            <div class="question-text">${q.question_text}</div>
-                            <div class="answer-comparison">
-                                <div class="answer-row your-answer">
-                                    <div class="answer-label">Your Answer:</div>
-                                    <div class="answer-text">${q.your_answer}</div>
+                    const questionsHTML = questions.map((question, index) => {
+                        const optionsHTML = question.options.map(option => {
+                            let optionClass = 'neutral';
+                            if (option === question.correct_answer) {
+                                optionClass = 'correct';
+                            } else if (option === question.student_answer) {
+                                optionClass = 'wrong';
+                            }
+                            
+                            return `
+                                <div class="option ${optionClass}">
+                                    ${option}
+                                    ${option === question.correct_answer ? ' ✓' : ''}
+                                    ${option === question.student_answer && option !== question.correct_answer ? ' ✗' : ''}
                                 </div>
-                                <div class="answer-row correct-answer">
-                                    <div class="answer-label">Correct:</div>
-                                    <div class="answer-text">${q.correct_answer}</div>
+                            `;
+                        }).join('');
+                        
+                        return `
+                            <div class="question-card">
+                                <div class="question-header">
+                                    <div class="question-number">Question ${index + 1}</div>
+                                    <div class="question-timestamp">${formatTimestamp(question.timestamp)}</div>
+                                </div>
+                                <div class="question-text">${question.question_text}</div>
+                                <div class="options-grid">
+                                    ${optionsHTML}
+                                </div>
+                                <div class="answer-summary">
+                                    <div class="your-answer">Your Answer: ${question.student_answer}</div>
+                                    <div class="correct-answer">Correct Answer: ${question.correct_answer}</div>
                                 </div>
                             </div>
-                        </div>
-                    `).join('');
+                        `;
+                    }).join('');
                     
                     return `
                         <div class="subject-section">
                             <div class="subject-header">
-                                <span class="subject-icon">${subjectInfo.icon}</span>
-                                <span class="subject-title">${subjectInfo.name}</span>
-                                <span class="wrong-count">${questions.length} wrong</span>
+                                <div class="subject-icon">${subjectInfo.icon}</div>
+                                <div class="subject-title">${subjectInfo.name}</div>
+                                <div class="subject-stats">${questions.length} wrong answer${questions.length !== 1 ? 's' : ''}</div>
                             </div>
-                            <div class="questions-list">
-                                ${questionsHTML}
-                            </div>
+                            ${questionsHTML}
                         </div>
                     `;
                 }).join('');
             
-            reviewContent.innerHTML = `<div class="subject-sections">${sectionsHTML}</div>`;
+            reviewContent.innerHTML = sectionsHTML;
         }
 
-        // Initialize
+        // Initialize when page loads
         window.onload = loadWrongAnswers;
     </script>
 </body>

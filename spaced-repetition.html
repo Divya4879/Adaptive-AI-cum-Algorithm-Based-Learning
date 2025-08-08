@@ -6,74 +6,29 @@
     <title>Spaced Repetition Practice - Adaptive AI Tutor</title>
     <style>
         :root {
-            --primary: #0a1628;
-            --secondary: #1e3a5f;
+            --primary: #1a365d;
+            --secondary: #2d3748;
             --accent: #4fd1c7;
             --text: #f7fafc;
-            --text-muted: #cbd5e0;
+            --background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             --glass: rgba(30, 58, 95, 0.15);
             --border: rgba(77, 209, 199, 0.2);
-            --success: #48bb78;
-            --error: #f56565;
+            --correct: #48bb78;
+            --wrong: #f56565;
+            --warning: #ed8936;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--background);
             color: var(--text);
             min-height: 100vh;
-        }
-
-        /* Navigation Header - DOUBLED HEIGHT */
-        .nav-header {
-            background: var(--glass);
-            backdrop-filter: blur(15px);
-            border-bottom: 1px solid var(--border);
-            padding: 2rem 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .nav-title {
-            font-size: 2rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--accent) 0%, #81e6d9 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: var(--text);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 1.1rem;
-            transition: color 0.3s ease;
-        }
-
-        .nav-links a:hover {
-            color: var(--accent);
-        }
-
-        .nav-links a.active {
-            color: var(--accent);
         }
 
         .container {
@@ -82,111 +37,111 @@
             padding: 2rem;
         }
 
-        .page-header {
+        .header {
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
             text-align: center;
-            margin-bottom: 3rem;
         }
 
         .page-title {
             font-size: 2.5rem;
             font-weight: 800;
-            background: linear-gradient(135deg, var(--accent) 0%, #81e6d9 100%);
+            background: linear-gradient(135deg, #4fd1c7 0%, #81e6d9 100%);
+            background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 1rem;
         }
 
-        .page-subtitle {
-            font-size: 1.2rem;
-            color: var(--text-muted);
-            line-height: 1.6;
-        }
-
-        .subject-tabs {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            background: var(--glass);
-            backdrop-filter: blur(15px);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 1rem;
-        }
-
-        .tab-button {
-            flex: 1;
-            padding: 1rem;
-            background: transparent;
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            color: var(--text);
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-        }
-
-        .tab-button:hover {
-            border-color: var(--accent);
-            background: rgba(77, 209, 199, 0.05);
-        }
-
-        .tab-button.active {
-            border-color: var(--accent);
-            background: rgba(77, 209, 199, 0.1);
-            color: var(--accent);
-        }
-
-        .tab-icon {
-            font-size: 1.2rem;
-        }
-
-        .practice-section {
-            background: var(--glass);
-            backdrop-filter: blur(15px);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 2rem;
+        .algorithm-info {
+            font-size: 1.1rem;
+            opacity: 0.9;
             margin-bottom: 2rem;
         }
 
-        .practice-stats {
+        .subject-selector {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
+            gap: 1rem;
             margin-bottom: 2rem;
         }
 
-        .stat-card {
-            background: rgba(77, 209, 199, 0.1);
-            border: 1px solid var(--border);
-            border-radius: 12px;
+        .subject-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid transparent;
+            border-radius: 15px;
             padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
             text-align: center;
         }
 
-        .stat-value {
+        .subject-card:hover {
+            background: rgba(77, 209, 199, 0.1);
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .subject-card.selected {
+            background: rgba(77, 209, 199, 0.2);
+            border-color: var(--accent);
+        }
+
+        .subject-icon {
             font-size: 2rem;
-            font-weight: 800;
-            color: var(--accent);
             margin-bottom: 0.5rem;
         }
 
-        .stat-label {
-            color: var(--text-muted);
-            font-size: 0.9rem;
+        .subject-name {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
         }
 
-        .question-card {
+        .subject-stats {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .practice-container {
             background: var(--glass);
             backdrop-filter: blur(15px);
             border: 1px solid var(--border);
-            border-radius: 16px;
+            border-radius: 20px;
             padding: 2rem;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .practice-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .practice-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .practice-stats {
+            text-align: right;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .question-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
         }
 
         .question-header {
@@ -196,122 +151,145 @@
             margin-bottom: 1.5rem;
         }
 
-        .question-text {
-            font-size: 1.3rem;
-            font-weight: 600;
-            line-height: 1.6;
-            flex: 1;
+        .question-number {
+            background: var(--accent);
+            color: var(--primary);
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            font-weight: 700;
         }
 
-        .question-progress {
+        .progress-container {
             display: flex;
-            gap: 0.5rem;
             align-items: center;
+            gap: 1rem;
         }
 
-        .progress-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: rgba(77, 209, 199, 0.2);
-            border: 1px solid var(--border);
+        .progress-bar {
+            width: 150px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
         }
 
-        .progress-dot.completed {
-            background: var(--success);
-            border-color: var(--success);
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--warning), var(--correct));
+            transition: width 0.3s ease;
         }
 
         .progress-text {
-            color: var(--text-muted);
             font-size: 0.9rem;
-            margin-left: 0.5rem;
+            font-weight: 600;
         }
 
-        .options-grid {
+        .question-text {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .options-container {
             display: grid;
             gap: 1rem;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
         }
 
         .option {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid transparent;
+            border-radius: 15px;
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        .option:hover {
+            background: rgba(77, 209, 199, 0.1);
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .option.selected {
+            background: rgba(77, 209, 199, 0.2);
+            border-color: var(--accent);
+        }
+
+        .option.correct {
+            background: rgba(72, 187, 120, 0.2);
+            border-color: var(--correct);
+            color: var(--correct);
+        }
+
+        .option.wrong {
+            background: rgba(245, 101, 101, 0.2);
+            border-color: var(--wrong);
+            color: var(--wrong);
+        }
+
+        .practice-controls {
             display: flex;
-            align-items: center;
+            justify-content: center;
             gap: 1rem;
-            padding: 1rem;
-            background: var(--glass);
-            border: 1px solid var(--border);
-            border-radius: 8px;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #4fd1c7 0%, #81e6d9 100%);
+            color: var(--primary);
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 15px;
+            font-size: 1.1rem;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.3s ease;
         }
 
-        .option:hover {
-            border-color: var(--accent);
-            background: rgba(77, 209, 199, 0.05);
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(79, 209, 199, 0.3);
         }
 
-        .option.selected {
-            border-color: var(--accent);
-            background: rgba(77, 209, 199, 0.1);
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
         }
 
-        .option.correct {
-            border-color: var(--success);
-            background: rgba(72, 187, 120, 0.2);
-        }
-
-        .option.wrong {
-            border-color: var(--error);
-            background: rgba(245, 101, 101, 0.2);
-        }
-
-        .option-letter {
-            width: 30px;
-            height: 30px;
-            background: linear-gradient(135deg, var(--accent) 0%, #81e6d9 100%);
-            color: var(--primary);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 0.9rem;
-            flex-shrink: 0;
-        }
-
-        .option.correct .option-letter {
-            background: linear-gradient(135deg, var(--success) 0%, #68d391 100%);
-        }
-
-        .option.wrong .option-letter {
-            background: linear-gradient(135deg, var(--error) 0%, #fc8181 100%);
-        }
-
-        .option-text {
-            font-size: 1rem;
-            line-height: 1.4;
-        }
-
-        .session-progress {
-            background: rgba(77, 209, 199, 0.1);
+        .feedback-message {
+            background: rgba(255, 255, 255, 0.05);
             border: 1px solid var(--border);
-            border-radius: 8px;
+            border-radius: 10px;
             padding: 1rem;
-            margin-bottom: 1rem;
+            margin-bottom: 2rem;
             text-align: center;
+            font-weight: 600;
         }
 
-        .session-text {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
+        .feedback-message.correct {
+            background: rgba(72, 187, 120, 0.1);
+            border-color: var(--correct);
+            color: var(--correct);
+        }
+
+        .feedback-message.wrong {
+            background: rgba(245, 101, 101, 0.1);
+            border-color: var(--wrong);
+            color: var(--wrong);
+        }
+
+        .feedback-message.mastered {
+            background: rgba(77, 209, 199, 0.1);
+            border-color: var(--accent);
+            color: var(--accent);
         }
 
         .empty-state {
             text-align: center;
             padding: 4rem 2rem;
-            color: var(--text-muted);
         }
 
         .empty-icon {
@@ -320,33 +298,38 @@
         }
 
         .empty-title {
-            font-size: 1.5rem;
+            font-size: 2rem;
             font-weight: 700;
+            color: var(--accent);
             margin-bottom: 1rem;
         }
 
         .empty-message {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
+            opacity: 0.8;
             line-height: 1.6;
         }
 
+        .hidden {
+            display: none;
+        }
+
         @media (max-width: 768px) {
-            .nav-header { padding: 1.5rem 0; }
-            .nav-title { font-size: 1.5rem; }
-            .nav-links a { font-size: 1rem; }
             .container { padding: 1rem; }
-            .subject-tabs { flex-direction: column; }
-            .practice-stats { grid-template-columns: 1fr; }
-            .question-header { flex-direction: column; gap: 1rem; }
+            .page-title { font-size: 2rem; }
+            .subject-selector { grid-template-columns: 1fr; }
+            .question-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+            .progress-container { flex-direction: column; align-items: flex-start; }
         }
     </style>
     <script src="all-questions-complete.js"></script>
-    <script src="app-engine.js"></script>
+    <script src="user-data-manager.js"></script>
+    <script src="user-data-manager.js"></script>
+    <script src="app-engine-enhanced.js"></script>
     <script src="config.js"></script>
     <script src="debug-helper.js"></script>
 </head>
 <body>
-    <!-- Navigation Header -->
     <!-- Navigation Header -->
     <nav class="nav-header" style="background: rgba(30, 58, 95, 0.15); backdrop-filter: blur(15px); border-bottom: 1px solid rgba(77, 209, 199, 0.2); padding: 2rem 0; position: sticky; top: 0; z-index: 100;">
         <div style="max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center;">
@@ -362,64 +345,38 @@
     </nav>
 
     <div class="container">
-        <div class="page-header">
-            <h1 class="page-title">Spaced Repetition Practice</h1>
-            <p class="page-subtitle">
-                Master your weak areas with cycling repetition algorithm.<br>
-                Answer each question correctly 5 times to remove it from practice.
-            </p>
-        </div>
-
-        <div class="subject-tabs">
-            <button class="tab-button active" data-subject="frontend_web_dev">
-                <span class="tab-icon">🎨</span>
-                <span>Frontend</span>
-            </button>
-            <button class="tab-button" data-subject="backend_web_dev">
-                <span class="tab-icon">⚙️</span>
-                <span>Backend</span>
-            </button>
-            <button class="tab-button" data-subject="software_engineering">
-                <span class="tab-icon">🏗️</span>
-                <span>Software Eng</span>
-            </button>
-            <button class="tab-button" data-subject="cloud_computing">
-                <span class="tab-icon">☁️</span>
-                <span>Cloud</span>
-            </button>
-        </div>
-
-        <div class="practice-section">
-            <div class="practice-stats">
-                <div class="stat-card">
-                    <div class="stat-value" id="questions-remaining">0</div>
-                    <div class="stat-label">Questions in Pool</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value" id="session-answered">0</div>
-                    <div class="stat-label">Questions Answered</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value" id="mastered-count">0</div>
-                    <div class="stat-label">Mastered This Session</div>
-                </div>
+        <div class="header">
+            <div class="page-title">Spaced Repetition Practice</div>
+            <div class="algorithm-info">
+                Modified Leitner System: Master questions by answering correctly 5 times
             </div>
+        </div>
 
-            <div id="practice-content">
-                <!-- Content will be loaded here -->
+        <!-- Subject Selection -->
+        <div id="subject-selection">
+            <div class="subject-selector" id="subject-selector">
+                <!-- Subject cards will be populated here -->
+            </div>
+        </div>
+
+        <!-- Practice Session -->
+        <div id="practice-session" class="hidden">
+            <div class="practice-container">
+                <div class="practice-header">
+                    <div class="practice-title" id="practice-title">Practice Session</div>
+                    <div class="practice-stats" id="practice-stats">
+                        Questions in pool: 0 | Mastered: 0
+                    </div>
+                </div>
+
+                <div id="practice-content">
+                    <!-- Practice questions will be loaded here -->
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Global state for Modified Leitner System
-        let currentSubject = 'frontend_web_dev';
-        let practicePool = []; // Questions available for practice
-        let sessionProgress = {}; // Track correct answers per question this session
-        let sessionStats = { answered: 0, mastered: 0 };
-        let allQuestions = []; // Store all questions from database
-        let currentQuestion = null;
-
         const subjects = {
             'frontend_web_dev': { name: 'Frontend Web Development', icon: '🎨' },
             'backend_web_dev': { name: 'Backend Web Development', icon: '⚙️' },
@@ -427,316 +384,226 @@
             'cloud_computing': { name: 'Cloud Computing', icon: '☁️' }
         };
 
-        // Load all questions from backend
-        async function loadAllQuestions() {
-            try {
-                console.log('📚 Loading all questions from backend...');
-                
-                const allQuestionsData = [];
-                
-                for (const subject of Object.keys(subjects)) {
-                    for (let level = 1; level <= 10; level++) {
-                        try {
-                            const response = await window.apiCall.get('/api/level/start', {
-                                method: 'POST',
-                                headers: { 'Content-Type': 'application/json' },
-                                body: JSON.stringify({
-                                    student_id: 'practice_loader',
-                                    subject: subject,
-                                    level: level
-                                })
-                            });
-                            
-                            const data = await response.json();
-                            if (data.success) {
-                                allQuestionsData.push(...data.questions);
-                            }
-                        } catch (error) {
-                            console.log(`Could not load ${subject} level ${level}`);
-                        }
-                    }
-                }
-                
-                allQuestions = allQuestionsData;
-                console.log(`✅ Loaded ${allQuestions.length} total questions`);
-                
-            } catch (error) {
-                console.error('❌ Error loading questions:', error);
+        let currentSubject = null;
+        let currentQuestion = null;
+        let selectedAnswer = null;
+        let practiceQuestions = [];
+        let currentQuestionIndex = 0;
+
+        function initializePractice() {
+            // Wait for user data manager to be available
+            if (!window.userDataManager) {
+                setTimeout(initializePractice, 100);
+                return;
             }
+
+            loadSubjectSelector();
         }
 
-        // Find full question data by question text
-        function findFullQuestionData(questionText) {
-            return allQuestions.find(q => q.question_text === questionText);
+        function loadSubjectSelector() {
+            const selector = document.getElementById('subject-selector');
+            
+            const subjectCards = Object.entries(subjects).map(([subjectId, subjectInfo]) => {
+                const practiceQuestions = window.userDataManager.getPracticeQuestions(subjectId);
+                const stats = window.userDataManager.getPracticeStats(subjectId);
+                
+                return `
+                    <div class="subject-card" onclick="selectSubject('${subjectId}')">
+                        <div class="subject-icon">${subjectInfo.icon}</div>
+                        <div class="subject-name">${subjectInfo.name}</div>
+                        <div class="subject-stats">
+                            ${stats.questionsNeedingPractice} questions to practice<br>
+                            ${stats.masteredQuestions} mastered
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            selector.innerHTML = subjectCards;
         }
 
-        // Initialize spaced repetition with Modified Leitner System
-        async function initSpacedRepetition() {
-            console.log('🧠 Initializing Modified Leitner System...');
+        function selectSubject(subjectId) {
+            currentSubject = subjectId;
+            practiceQuestions = window.userDataManager.getPracticeQuestions(subjectId);
             
-            // Load all questions first
-            await loadAllQuestions();
-            
-            // Reset session progress (new session = reset to 0)
-            sessionProgress = {};
-            sessionStats = { answered: 0, mastered: 0 };
-            
-            // Set up tab listeners
-            document.querySelectorAll('.tab-button').forEach(button => {
-                button.addEventListener('click', () => {
-                    const subject = button.dataset.subject;
-                    switchSubject(subject);
-                });
-            });
-            
-            // Load initial subject
-            loadSubjectPractice(currentSubject);
-        }
-
-        // Switch subject tab
-        function switchSubject(subject) {
-            currentSubject = subject;
-            
-            // Update active tab
-            document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
-            document.querySelector(`[data-subject="${subject}"]`).classList.add('active');
-            
-            // Reset session for new subject
-            sessionProgress = {};
-            sessionStats = { answered: 0, mastered: 0 };
-            
-            // Load subject practice
-            loadSubjectPractice(subject);
-        }
-
-        // Load practice questions for subject (Modified Leitner System)
-        function loadSubjectPractice(subject) {
-            console.log(`📚 Loading practice pool for ${subject}`);
-            
-            // Get wrong answers for this subject
-            const wrongAnswers = JSON.parse(localStorage.getItem('wrong_answers') || '{}');
-            const subjectWrongAnswers = wrongAnswers[subject] || [];
-            
-            // Initialize practice pool with all wrong questions
-            practicePool = subjectWrongAnswers.map(q => ({
-                ...q,
-                correctCount: 0, // Track correct answers for this question
-                totalAttempts: 0 // Track total attempts
-            }));
-            
-            console.log(`Practice pool initialized with ${practicePool.length} questions`);
-            
-            // Update stats
-            updateStats();
-            
-            // Start practice session
-            if (practicePool.length === 0) {
-                showEmptyState(subject);
-            } else {
-                showNextQuestion();
-            }
-        }
-
-        // Modified Leitner System: Select next question
-        function selectNextQuestion() {
-            if (practicePool.length === 0) {
-                showCompletionState();
-                return null;
-            }
-            
-            // Equal priority selection - random question from pool
-            const randomIndex = Math.floor(Math.random() * practicePool.length);
-            return practicePool[randomIndex];
-        }
-
-        // Show next question in cycle
-        function showNextQuestion() {
-            currentQuestion = selectNextQuestion();
-            
-            if (!currentQuestion) {
+            if (practiceQuestions.length === 0) {
+                showEmptyState();
                 return;
             }
             
-            console.log(`🎯 Showing question: ${currentQuestion.question_text}`);
-            console.log(`   Correct count: ${currentQuestion.correctCount}/5`);
+            // Update UI
+            document.getElementById('subject-selection').classList.add('hidden');
+            document.getElementById('practice-session').classList.remove('hidden');
+            document.getElementById('practice-title').textContent = subjects[subjectId].name + ' Practice';
             
-            // Find full question data with all 4 options
-            const fullQuestionData = findFullQuestionData(currentQuestion.question_text);
-            
-            const content = document.getElementById('practice-content');
-            content.innerHTML = `
-                <div class="session-progress">
-                    <div class="session-text">Modified Leitner System - Cycling Questions</div>
-                </div>
-                
-                <div class="question-card">
-                    <div class="question-header">
-                        <div class="question-text">${currentQuestion.question_text}</div>
-                        <div class="question-progress">
-                            ${Array.from({length: 5}, (_, i) => 
-                                `<div class="progress-dot ${i < currentQuestion.correctCount ? 'completed' : ''}"></div>`
-                            ).join('')}
-                            <div class="progress-text">${currentQuestion.correctCount}/5</div>
-                        </div>
-                    </div>
-                    <div class="options-grid" id="current-options">
-                        <!-- Options will be loaded here -->
-                    </div>
-                </div>
-            `;
-            
-            // Use full question data if available
-            let optionsToShow = [];
-            if (fullQuestionData && fullQuestionData.options) {
-                optionsToShow = fullQuestionData.options;
-            } else {
-                // Fallback: create 4 options
-                optionsToShow = [
-                    currentQuestion.correct_answer,
-                    currentQuestion.your_answer,
-                    'Alternative Option A',
-                    'Alternative Option B'
-                ];
-                optionsToShow = [...new Set(optionsToShow)];
-                while (optionsToShow.length < 4) {
-                    optionsToShow.push(`Option ${String.fromCharCode(65 + optionsToShow.length)}`);
-                }
-                optionsToShow = optionsToShow.slice(0, 4);
-                optionsToShow.sort(() => Math.random() - 0.5);
-            }
-            
-            // Create option elements
-            const optionsGrid = document.getElementById('current-options');
-            optionsToShow.forEach((option, index) => {
-                const optionDiv = document.createElement('div');
-                optionDiv.className = 'option';
-                optionDiv.innerHTML = `
-                    <div class="option-letter">${String.fromCharCode(65 + index)}</div>
-                    <div class="option-text">${option}</div>
-                `;
-                
-                optionDiv.addEventListener('click', () => {
-                    selectPracticeOption(option, optionDiv);
-                });
-                
-                optionsGrid.appendChild(optionDiv);
-            });
+            currentQuestionIndex = 0;
+            loadCurrentQuestion();
         }
 
-        // Handle answer selection (Modified Leitner System)
-        function selectPracticeOption(selectedAnswer, element) {
-            console.log('🎯 Answer selected:', selectedAnswer);
+        function showEmptyState() {
+            document.getElementById('subject-selection').classList.add('hidden');
+            document.getElementById('practice-session').classList.remove('hidden');
             
-            // Remove previous selections
-            document.querySelectorAll('.option').forEach(opt => {
-                opt.classList.remove('selected', 'correct', 'wrong');
-            });
-            
-            // Mark selected option
-            element.classList.add('selected');
-            
-            // Update attempts
-            currentQuestion.totalAttempts++;
-            sessionStats.answered++;
-            
-            const isCorrect = selectedAnswer === currentQuestion.correct_answer;
-            
-            if (isCorrect) {
-                element.classList.add('correct');
-                
-                // Increment correct count for this question
-                currentQuestion.correctCount++;
-                
-                console.log(`✅ Correct! Count: ${currentQuestion.correctCount}/5`);
-                
-                // Check if mastered (5 correct answers)
-                if (currentQuestion.correctCount >= 5) {
-                    // Remove from practice pool
-                    practicePool = practicePool.filter(q => q.question_text !== currentQuestion.question_text);
-                    
-                    // Remove from wrong answers list permanently
-                    const wrongAnswers = JSON.parse(localStorage.getItem('wrong_answers') || '{}');
-                    if (wrongAnswers[currentSubject]) {
-                        wrongAnswers[currentSubject] = wrongAnswers[currentSubject].filter(
-                            q => q.question_text !== currentQuestion.question_text
-                        );
-                        localStorage.setItem('wrong_answers', JSON.stringify(wrongAnswers));
-                    }
-                    
-                    sessionStats.mastered++;
-                    
-                    setTimeout(() => {
-                        alert('🎉 Question Mastered! Removed from practice pool.');
-                        updateStats();
-                        showNextQuestion(); // Continue with next question
-                    }, 1000);
-                } else {
-                    // Question stays in pool for more practice
-                    setTimeout(() => {
-                        updateStats();
-                        showNextQuestion(); // Cycle to next question
-                    }, 1500);
-                }
-            } else {
-                element.classList.add('wrong');
-                
-                // Highlight correct answer
-                document.querySelectorAll('.option').forEach(opt => {
-                    const optionText = opt.querySelector('.option-text').textContent;
-                    if (optionText === currentQuestion.correct_answer) {
-                        opt.classList.add('correct');
-                    }
-                });
-                
-                // Question stays in pool, correct count unchanged
-                setTimeout(() => {
-                    updateStats();
-                    showNextQuestion(); // Cycle to next question
-                }, 2000);
-            }
-        }
-
-        // Update statistics
-        function updateStats() {
-            document.getElementById('questions-remaining').textContent = practicePool.length;
-            document.getElementById('session-answered').textContent = sessionStats.answered;
-            document.getElementById('mastered-count').textContent = sessionStats.mastered;
-        }
-
-        // Show empty state
-        function showEmptyState(subject) {
-            const content = document.getElementById('practice-content');
-            content.innerHTML = `
+            document.getElementById('practice-content').innerHTML = `
                 <div class="empty-state">
                     <div class="empty-icon">🎉</div>
-                    <div class="empty-title">No Questions to Practice!</div>
+                    <div class="empty-title">All Questions Mastered!</div>
                     <div class="empty-message">
-                        You haven't answered any ${subjects[subject].name} questions incorrectly yet,<br>
-                        or you've mastered all your wrong answers!<br><br>
-                        <strong>Keep up the excellent work!</strong>
+                        You have mastered all wrong questions in ${subjects[currentSubject].name}.<br>
+                        Great job! Try taking more quizzes to add new questions to practice.
                     </div>
+                    <br>
+                    <button class="btn" onclick="goBackToSubjects()">Choose Another Subject</button>
                 </div>
             `;
         }
 
-        // Show completion state
-        function showCompletionState() {
-            const content = document.getElementById('practice-content');
-            content.innerHTML = `
-                <div class="empty-state">
-                    <div class="empty-icon">✅</div>
-                    <div class="empty-title">All Questions Mastered!</div>
-                    <div class="empty-message">
-                        Congratulations! You've mastered all questions in this session.<br>
-                        You answered ${sessionStats.answered} questions and mastered ${sessionStats.mastered} questions.<br><br>
-                        <strong>Excellent work!</strong>
+        function loadCurrentQuestion() {
+            if (currentQuestionIndex >= practiceQuestions.length) {
+                // Reload practice questions to get updated list
+                practiceQuestions = window.userDataManager.getPracticeQuestions(currentSubject);
+                if (practiceQuestions.length === 0) {
+                    showEmptyState();
+                    return;
+                }
+                currentQuestionIndex = 0;
+            }
+
+            currentQuestion = practiceQuestions[currentQuestionIndex];
+            selectedAnswer = null;
+            
+            const progress = currentQuestion.practiceProgress;
+            const progressPercentage = (progress.correctCount / 5) * 100;
+            
+            // Update stats
+            const stats = window.userDataManager.getPracticeStats(currentSubject);
+            document.getElementById('practice-stats').innerHTML = `
+                Questions in pool: ${stats.questionsNeedingPractice} | Mastered: ${stats.masteredQuestions}
+            `;
+            
+            const questionHTML = `
+                <div class="question-card">
+                    <div class="question-header">
+                        <div class="question-number">Question ${currentQuestionIndex + 1} of ${practiceQuestions.length}</div>
+                        <div class="progress-container">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: ${progressPercentage}%"></div>
+                            </div>
+                            <div class="progress-text">${progress.correctCount}/5 correct</div>
+                        </div>
+                    </div>
+                    
+                    <div class="question-text">${currentQuestion.question_text}</div>
+                    
+                    <div class="options-container" id="options-container">
+                        ${currentQuestion.options.map((option, index) => `
+                            <div class="option" onclick="selectOption('${option}', this)">
+                                ${option}
+                            </div>
+                        `).join('')}
+                    </div>
+                    
+                    <div id="feedback-message" class="feedback-message hidden"></div>
+                    
+                    <div class="practice-controls">
+                        <button class="btn" id="submit-btn" onclick="submitAnswer()" disabled>Submit Answer</button>
+                        <button class="btn" id="next-btn" onclick="nextQuestion()" style="display: none;">Next Question</button>
+                        <button class="btn" onclick="goBackToSubjects()">Back to Subjects</button>
                     </div>
                 </div>
             `;
+            
+            document.getElementById('practice-content').innerHTML = questionHTML;
+        }
+
+        function selectOption(answer, element) {
+            // Remove previous selection
+            document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+            
+            // Add selection to clicked option
+            element.classList.add('selected');
+            selectedAnswer = answer;
+            
+            // Enable submit button
+            document.getElementById('submit-btn').disabled = false;
+        }
+
+        async function submitAnswer() {
+            if (!selectedAnswer) return;
+            
+            try {
+                const response = await window.apiCall.post('/api/practice/submit', {
+                    student_id: window.userDataManager.studentId,
+                    subject: currentSubject,
+                    question_id: currentQuestion.id,
+                    answer: selectedAnswer
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showFeedback(result);
+                    
+                    // Update options to show correct/wrong
+                    document.querySelectorAll('.option').forEach(opt => {
+                        const optionText = opt.textContent.trim();
+                        if (optionText === currentQuestion.correct_answer) {
+                            opt.classList.add('correct');
+                        } else if (optionText === selectedAnswer && !result.is_correct) {
+                            opt.classList.add('wrong');
+                        }
+                        opt.onclick = null; // Disable clicking
+                    });
+                    
+                    // Show next button
+                    document.getElementById('submit-btn').style.display = 'none';
+                    document.getElementById('next-btn').style.display = 'inline-block';
+                    
+                    // If question was mastered, remove it from current list
+                    if (result.progress.mastered) {
+                        practiceQuestions = practiceQuestions.filter(q => q.id !== currentQuestion.id);
+                        if (currentQuestionIndex >= practiceQuestions.length) {
+                            currentQuestionIndex = 0;
+                        }
+                    }
+                } else {
+                    alert('Error submitting answer: ' + result.error);
+                }
+            } catch (error) {
+                console.error('Error submitting practice answer:', error);
+                alert('Failed to submit answer. Please try again.');
+            }
+        }
+
+        function showFeedback(result) {
+            const feedbackElement = document.getElementById('feedback-message');
+            feedbackElement.classList.remove('hidden', 'correct', 'wrong', 'mastered');
+            
+            if (result.progress.mastered) {
+                feedbackElement.classList.add('mastered');
+                feedbackElement.textContent = result.message;
+            } else if (result.is_correct) {
+                feedbackElement.classList.add('correct');
+                feedbackElement.textContent = result.message;
+            } else {
+                feedbackElement.classList.add('wrong');
+                feedbackElement.textContent = result.message;
+            }
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            loadCurrentQuestion();
+        }
+
+        function goBackToSubjects() {
+            document.getElementById('practice-session').classList.add('hidden');
+            document.getElementById('subject-selection').classList.remove('hidden');
+            loadSubjectSelector(); // Refresh stats
         }
 
         // Initialize when page loads
-        window.onload = initSpacedRepetition;
+        window.onload = initializePractice;
     </script>
 </body>
 </html>

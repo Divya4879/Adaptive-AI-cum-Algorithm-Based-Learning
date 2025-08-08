@@ -3,23 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adaptive AI Tutor - Dashboard</title>
+    <title>Adaptive AI Tutor - AlgoFest Hackathon</title>
     <style>
         :root {
-            --primary: #0a1628;
-            --secondary: #1e3a5f;
+            --primary: #1a365d;
+            --secondary: #2d3748;
             --accent: #4fd1c7;
             --text: #f7fafc;
-            --text-muted: #cbd5e0;
+            --background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             --glass: rgba(30, 58, 95, 0.15);
             --border: rgba(77, 209, 199, 0.2);
+            --success: #48bb78;
+            --warning: #ed8936;
+            --error: #f56565;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--background);
             color: var(--text);
             min-height: 100vh;
         }
@@ -30,54 +37,59 @@
             padding: 2rem;
         }
 
-        .header {
+        .hero-section {
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 3rem;
             text-align: center;
-            margin-bottom: 4rem;
-            font-size:150%;
+            margin-bottom: 3rem;
         }
 
-        .title {
-            font-size: 5rem;
-            font-weight: 900;
-            background: linear-gradient(135deg, var(--accent) 0%, #81e6d9 100%);
-            background-clip: text; -webkit-background-clip: text;
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #4fd1c7 0%, #81e6d9 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 2rem;
+            margin-bottom: 1rem;
         }
 
-        .subtitle {
-            font-size: 2.4rem;
-            color: var(--text-muted);
-            margin-bottom: 2rem;
-            max-width: 70vw;
-            margin-left: auto;
-            margin-right: auto;
-            font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-        }
-
-        .description {
+        .hero-subtitle {
             font-size: 1.5rem;
-            color: lightcyan;
-            max-width: 75vw;
-            margin: 1rem auto 3rem;
-            line-height: 1.6;
-            font-family: 'Courier New', Courier, monospace;
+            opacity: 0.9;
+            margin-bottom: 1rem;
         }
 
-        .stats-grid {
+        .hero-description {
+            font-size: 1.1rem;
+            opacity: 0.8;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .stats-overview {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 2rem;
-            margin-bottom: 4rem;
+            margin-bottom: 3rem;
         }
 
         .stat-card {
             background: var(--glass);
             backdrop-filter: blur(15px);
             border: 1px solid var(--border);
-            border-radius: 16px;
+            border-radius: 20px;
             padding: 2rem;
             text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(79, 209, 199, 0.1);
         }
 
         .stat-value {
@@ -88,133 +100,187 @@
         }
 
         .stat-label {
-            color: var(--text-muted);
-            font-size: 1rem;
+            font-size: 1.1rem;
+            opacity: 0.8;
+            margin-bottom: 0.5rem;
         }
 
-        .progress-overview {
-            background: var(--glass);
-            backdrop-filter: blur(15px);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 3rem;
+        .stat-detail {
+            font-size: 0.9rem;
+            opacity: 0.6;
+        }
+
+        .subjects-section {
             margin-bottom: 3rem;
         }
 
-        .progress-title {
-            font-size: 2rem;
+        .section-title {
+            font-size: 2.5rem;
             font-weight: 700;
-            margin-bottom: 2rem;
+            color: var(--accent);
             text-align: center;
+            margin-bottom: 2rem;
         }
 
         .subjects-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 2rem;
         }
 
-        .subject-progress {
-            background: rgba(77, 209, 199, 0.05);
+        .subject-card {
+            background: var(--glass);
+            backdrop-filter: blur(15px);
             border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 1.5rem;
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .subject-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(79, 209, 199, 0.1);
+            border-color: var(--accent);
         }
 
         .subject-header {
             display: flex;
             align-items: center;
             gap: 1rem;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
         }
 
         .subject-icon {
-            font-size: 2rem;
-        }
-
-        .subject-name {
-            font-size: 1.2rem;
-            font-weight: 600;
-        }
-
-        .level-info {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .current-level {
             font-size: 2.5rem;
+        }
+
+        .subject-info h3 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .subject-info p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .subject-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .subject-stat {
+            text-align: center;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+
+        .subject-stat-value {
+            font-size: 1.5rem;
             font-weight: 700;
             color: var(--accent);
         }
 
-        .level-dots {
+        .subject-stat-label {
+            font-size: 0.8rem;
+            opacity: 0.7;
+            margin-top: 0.25rem;
+        }
+
+        .level-indicator {
             display: flex;
-            gap: 0.25rem;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(77, 209, 199, 0.1);
+            border: 1px solid var(--accent);
+            border-radius: 10px;
+            font-weight: 600;
         }
 
-        .level-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: rgba(77, 209, 199, 0.2);
+        .accuracy-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 1rem;
         }
 
-        .level-dot.completed {
-            background: var(--accent);
-            box-shadow: 0 0 8px rgba(77, 209, 199, 0.4);
+        .accuracy-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--error), var(--warning), var(--success));
+            transition: width 0.3s ease;
         }
 
-        .level-dot.current {
-            background: var(--accent);
-            animation: pulse 2s infinite;
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
         }
 
-        @keyframes pulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.7; transform: scale(1.2); }
+        .action-button {
+            background: linear-gradient(135deg, #4fd1c7 0%, #81e6d9 100%);
+            color: var(--primary);
+            text-decoration: none;
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            display: block;
         }
 
-        .subject-stats {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.9rem;
-            color: var(--text-muted);
+        .action-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(79, 209, 199, 0.3);
         }
 
-        .cta-section {
+        .algorithm-info {
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-top: 3rem;
             text-align: center;
         }
 
-        .cta-button {
-            background: linear-gradient(135deg, var(--accent) 0%, #81e6d9 100%);
-            color: var(--primary);
-            border: none;
-            padding: 1.5rem 3rem;
-            border-radius: 12px;
-            font-size: 1.3rem;
+        .algorithm-title {
+            font-size: 1.8rem;
             font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
+            color: var(--accent);
+            margin-bottom: 1rem;
         }
 
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(77, 209, 199, 0.4);
+        .algorithm-description {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            line-height: 1.6;
         }
 
         @media (max-width: 768px) {
             .container { padding: 1rem; }
-            .title { font-size: 2.5rem; }
+            .hero-title { font-size: 2.5rem; }
+            .hero-subtitle { font-size: 1.2rem; }
+            .stats-overview { grid-template-columns: repeat(2, 1fr); }
             .subjects-grid { grid-template-columns: 1fr; }
+            .subject-stats { grid-template-columns: 1fr; }
         }
     </style>
     <script src="all-questions-complete.js"></script>
-    <script src="app-engine.js"></script>
+    <script src="user-data-manager.js"></script>
+    <script src="user-data-manager.js"></script>
+    <script src="app-engine-enhanced.js"></script>
     <script src="config.js"></script>
     <script src="debug-helper.js"></script>
 </head>
@@ -232,111 +298,183 @@
             </ul>
         </div>
     </nav>
+
     <div class="container">
-        <div class="header">
-            <h1 class="title">🧠 Adaptive AI Tutor</h1>
-            <p class="subtitle">
-                Experience intelligent learning that adapts to your performance using advanced machine learning algorithms.
+        <!-- Hero Section -->
+        <div class="hero-section">
+            <h1 class="hero-title">Adaptive AI Tutor</h1>
+            <p class="hero-subtitle">AlgoFest Hackathon 2025</p>
+            <p class="hero-description">
+                Experience the power of the Modified Leitner System algorithm combined with adaptive level progression 
+                for optimal learning outcomes in technical subjects.
             </p>
-            <p class="description">
-                Master 4 tech subjects with 200 unique questions, 10-level progression system, and personalized difficulty adjustment that learns from your responses.
+        </div>
+
+        <!-- Stats Overview -->
+        <div class="stats-overview">
+            <div class="stat-card">
+                <div class="stat-value" id="total-solved">0</div>
+                <div class="stat-label">Questions Solved</div>
+                <div class="stat-detail">Across all subjects</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="overall-accuracy">0%</div>
+                <div class="stat-label">Overall Accuracy</div>
+                <div class="stat-detail">Your performance rate</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="total-correct">0</div>
+                <div class="stat-label">Correct Answers</div>
+                <div class="stat-detail">Successfully answered</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="wrong-to-review">0</div>
+                <div class="stat-label">Questions to Review</div>
+                <div class="stat-detail">Wrong answers to practice</div>
+            </div>
+        </div>
+
+        <!-- Subjects Section -->
+        <div class="subjects-section">
+            <h2 class="section-title">Your Progress by Subject</h2>
+            <div class="subjects-grid" id="subjects-grid">
+                <!-- Subject cards will be populated here -->
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+            <a href="subjects.html" class="action-button">
+                🎯 Start Quiz
+            </a>
+            <a href="review.html" class="action-button">
+                📝 Review Wrong Answers
+            </a>
+            <a href="spaced-repetition.html" class="action-button">
+                🔄 Practice with Spaced Repetition
+            </a>
+        </div>
+
+        <!-- Algorithm Information -->
+        <div class="algorithm-info">
+            <h3 class="algorithm-title">Modified Leitner System Algorithm</h3>
+            <p class="algorithm-description">
+                Our adaptive learning platform uses a Modified Leitner System for spaced repetition combined with 
+                dynamic level progression. Questions you answer incorrectly are added to your practice pool, 
+                where they must be answered correctly 5 times to be considered mastered. The algorithm optimizes 
+                learning efficiency by focusing on your weak areas while maintaining knowledge retention.
             </p>
-        </div>
-
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-value" id="total-questions">200</div>
-                <div class="stat-label">Unique Questions</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-value">4</div>
-                <div class="stat-label">Tech Subjects</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-value">10</div>
-                <div class="stat-label">Levels Each</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-value" id="user-progress">0%</div>
-                <div class="stat-label">Your Progress</div>
-            </div>
-        </div>
-
-        <div class="progress-overview">
-            <h2 class="progress-title">Your Learning Progress</h2>
-            <div class="subjects-grid" id="subjects-progress">
-                <!-- Progress will be loaded here -->
-            </div>
-        </div>
-
-        <div class="progress-overview">
-            <h2 class="progress-title">Review & Practice</h2>
-            <div style="text-align: center; margin: 2rem 0;">
-                <a href="review.html" class="cta-button" style="margin-right: 1rem; background: linear-gradient(135deg, #f56565 0%, #fc8181 100%);">
-                    📚 Review Wrong Answers
-                </a>
-            </div>
-        </div>
-        <div class="cta-section">
         </div>
     </div>
 
     <script>
-        // Load user progress
-        function loadProgress() {
-            const progress = JSON.parse(localStorage.getItem('adaptive_tutor_progress') || '{}');
-            const subjects = {
-                'frontend_web_dev': { name: 'Frontend Web Development', icon: '🎨' },
-                'backend_web_dev': { name: 'Backend Web Development', icon: '⚙️' },
-                'software_engineering': { name: 'Software Engineering', icon: '🏗️' },
-                'cloud_computing': { name: 'Cloud Computing', icon: '☁️' }
-            };
+        const subjects = {
+            'frontend_web_dev': { 
+                name: 'Frontend Web Development', 
+                icon: '🎨',
+                description: 'HTML, CSS, JavaScript, React'
+            },
+            'backend_web_dev': { 
+                name: 'Backend Web Development', 
+                icon: '⚙️',
+                description: 'APIs, Databases, Security'
+            },
+            'software_engineering': { 
+                name: 'Software Engineering', 
+                icon: '🏗️',
+                description: 'Design Patterns, Architecture'
+            },
+            'cloud_computing': { 
+                name: 'Cloud Computing', 
+                icon: '☁️',
+                description: 'AWS, Containers, DevOps'
+            }
+        };
 
-            let totalQuestions = 0;
-            let totalCorrect = 0;
+        function loadDashboard() {
+            // Wait for user data manager to be available
+            if (!window.userDataManager) {
+                setTimeout(loadDashboard, 100);
+                return;
+            }
 
-            const progressGrid = document.getElementById('subjects-progress');
-            progressGrid.innerHTML = Object.entries(subjects).map(([id, subject]) => {
-                const subjectProgress = progress[id] || { current_level: 1, questions_answered: 0, total_correct: 0 };
-                const accuracy = subjectProgress.questions_answered > 0 ? 
-                    Math.round((subjectProgress.total_correct / subjectProgress.questions_answered) * 100) : 0;
+            const userStats = window.userDataManager.getUserStats();
+            const wrongQuestions = window.userDataManager.getWrongQuestions();
+            
+            // Update overall stats
+            document.getElementById('total-solved').textContent = userStats.totalQuestionsSolved;
+            document.getElementById('overall-accuracy').textContent = Math.round(userStats.overallAccuracy) + '%';
+            document.getElementById('total-correct').textContent = userStats.totalCorrectAnswers;
+            
+            // Calculate total wrong questions to review
+            const totalWrongToReview = Object.values(wrongQuestions).reduce((sum, questions) => sum + questions.length, 0);
+            document.getElementById('wrong-to-review').textContent = totalWrongToReview;
+            
+            // Load subject cards
+            loadSubjectCards(userStats, wrongQuestions);
+        }
 
-                totalQuestions += subjectProgress.questions_answered;
-                totalCorrect += subjectProgress.total_correct;
-
+        function loadSubjectCards(userStats, wrongQuestions) {
+            const subjectsGrid = document.getElementById('subjects-grid');
+            
+            const subjectCards = Object.entries(subjects).map(([subjectId, subjectInfo]) => {
+                const subjectStats = userStats.subjects[subjectId];
+                const wrongCount = wrongQuestions[subjectId] ? wrongQuestions[subjectId].length : 0;
+                const practiceStats = window.userDataManager.getPracticeStats(subjectId);
+                
+                const accuracy = subjectStats.accuracy || 0;
+                const accuracyColor = accuracy >= 80 ? 'var(--success)' : 
+                                    accuracy >= 60 ? 'var(--warning)' : 'var(--error)';
+                
                 return `
-                    <div class="subject-progress">
+                    <div class="subject-card" onclick="goToQuiz('${subjectId}')">
                         <div class="subject-header">
-                            <span class="subject-icon">${subject.icon}</span>
-                            <span class="subject-name">${subject.name}</span>
-                        </div>
-                        <div class="level-info">
-                            <span class="current-level">Level ${subjectProgress.current_level}</span>
-                            <div class="level-dots">
-                                ${Array.from({length: 10}, (_, i) => {
-                                    const level = i + 1;
-                                    let className = 'level-dot';
-                                    if (level < subjectProgress.current_level) className += ' completed';
-                                    else if (level === subjectProgress.current_level) className += ' current';
-                                    return `<div class="${className}"></div>`;
-                                }).join('')}
+                            <div class="subject-icon">${subjectInfo.icon}</div>
+                            <div class="subject-info">
+                                <h3>${subjectInfo.name}</h3>
+                                <p>${subjectInfo.description}</p>
                             </div>
                         </div>
+                        
                         <div class="subject-stats">
-                            <span>${subjectProgress.questions_answered} Questions</span>
-                            <span>${accuracy}% Accuracy</span>
+                            <div class="subject-stat">
+                                <div class="subject-stat-value">${subjectStats.questionsSolved}</div>
+                                <div class="subject-stat-label">Questions Solved</div>
+                            </div>
+                            <div class="subject-stat">
+                                <div class="subject-stat-value">${Math.round(accuracy)}%</div>
+                                <div class="subject-stat-label">Accuracy</div>
+                            </div>
+                            <div class="subject-stat">
+                                <div class="subject-stat-value">${wrongCount}</div>
+                                <div class="subject-stat-label">To Review</div>
+                            </div>
+                            <div class="subject-stat">
+                                <div class="subject-stat-value">${practiceStats.masteredQuestions}</div>
+                                <div class="subject-stat-label">Mastered</div>
+                            </div>
+                        </div>
+                        
+                        <div class="level-indicator">
+                            🎯 Current Level: ${subjectStats.currentLevel}
+                        </div>
+                        
+                        <div class="accuracy-bar">
+                            <div class="accuracy-fill" style="width: ${accuracy}%; background: ${accuracyColor};"></div>
                         </div>
                     </div>
                 `;
             }).join('');
-
-            // Update overall progress
-            const overallAccuracy = totalQuestions > 0 ? Math.round((totalCorrect / totalQuestions) * 100) : 0;
-            document.getElementById('user-progress').textContent = overallAccuracy + '%';
+            
+            subjectsGrid.innerHTML = subjectCards;
         }
 
-        // Initialize
-        window.onload = loadProgress;
+        function goToQuiz(subjectId) {
+            window.location.href = `test.html?subject=${subjectId}`;
+        }
+
+        // Initialize dashboard when page loads
+        window.onload = loadDashboard;
     </script>
 </body>
 </html>
