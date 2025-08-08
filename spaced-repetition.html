@@ -6,16 +6,17 @@
     <title>Spaced Repetition Practice - Adaptive AI Tutor</title>
     <style>
         :root {
-            --primary: #1a365d;
-            --secondary: #2d3748;
+            --primary: #0a1628;
+            --secondary: #1e3a5f;
             --accent: #4fd1c7;
             --text: #f7fafc;
-            --background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --glass: rgba(30, 58, 95, 0.15);
-            --border: rgba(77, 209, 199, 0.2);
+            --background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+            --glass: rgba(15, 32, 39, 0.8);
+            --border: rgba(79, 209, 199, 0.3);
             --correct: #48bb78;
             --wrong: #f56565;
             --warning: #ed8936;
+            --card-bg: rgba(30, 58, 95, 0.6);
         }
 
         * {
@@ -39,12 +40,13 @@
 
         .header {
             background: var(--glass);
-            backdrop-filter: blur(15px);
+            backdrop-filter: blur(20px);
             border: 1px solid var(--border);
             border-radius: 20px;
             padding: 2rem;
             margin-bottom: 2rem;
             text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
 
         .page-title {
@@ -71,23 +73,25 @@
         }
 
         .subject-card {
-            background: rgba(255, 255, 255, 0.05);
+            background: var(--card-bg);
             border: 2px solid transparent;
             border-radius: 15px;
             padding: 1.5rem;
             cursor: pointer;
             transition: all 0.3s ease;
             text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
 
         .subject-card:hover {
-            background: rgba(77, 209, 199, 0.1);
+            background: rgba(79, 209, 199, 0.1);
             border-color: var(--accent);
             transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(79, 209, 199, 0.2);
         }
 
         .subject-card.selected {
-            background: rgba(77, 209, 199, 0.2);
+            background: rgba(79, 209, 199, 0.2);
             border-color: var(--accent);
         }
 
@@ -99,6 +103,7 @@
         .subject-name {
             font-weight: 600;
             margin-bottom: 0.5rem;
+            color: var(--accent);
         }
 
         .subject-stats {
@@ -108,11 +113,12 @@
 
         .practice-container {
             background: var(--glass);
-            backdrop-filter: blur(15px);
+            backdrop-filter: blur(20px);
             border: 1px solid var(--border);
             border-radius: 20px;
             padding: 2rem;
             margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
 
         .practice-header {
@@ -137,11 +143,12 @@
         }
 
         .question-card {
-            background: rgba(255, 255, 255, 0.05);
+            background: var(--card-bg);
             border: 1px solid var(--border);
             border-radius: 15px;
             padding: 2rem;
             margin-bottom: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
 
         .question-header {
@@ -167,21 +174,23 @@
 
         .progress-bar {
             width: 150px;
-            height: 8px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 4px;
+            height: 10px;
+            background: rgba(15, 32, 39, 0.5);
+            border-radius: 5px;
             overflow: hidden;
+            border: 1px solid var(--border);
         }
 
         .progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, var(--warning), var(--correct));
+            background: linear-gradient(90deg, var(--wrong), var(--warning), var(--correct));
             transition: width 0.3s ease;
         }
 
         .progress-text {
             font-size: 0.9rem;
             font-weight: 600;
+            color: var(--accent);
         }
 
         .question-text {
@@ -198,7 +207,7 @@
         }
 
         .option {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(15, 32, 39, 0.5);
             border: 2px solid transparent;
             border-radius: 15px;
             padding: 1rem 1.5rem;
@@ -208,13 +217,13 @@
         }
 
         .option:hover {
-            background: rgba(77, 209, 199, 0.1);
+            background: rgba(79, 209, 199, 0.1);
             border-color: var(--accent);
             transform: translateY(-2px);
         }
 
         .option.selected {
-            background: rgba(77, 209, 199, 0.2);
+            background: rgba(79, 209, 199, 0.2);
             border-color: var(--accent);
         }
 
@@ -246,11 +255,12 @@
             font-weight: 700;
             cursor: pointer;
             transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(79, 209, 199, 0.3);
         }
 
         .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(79, 209, 199, 0.3);
+            box-shadow: 0 10px 25px rgba(79, 209, 199, 0.4);
         }
 
         .btn:disabled {
@@ -260,7 +270,7 @@
         }
 
         .feedback-message {
-            background: rgba(255, 255, 255, 0.05);
+            background: var(--card-bg);
             border: 1px solid var(--border);
             border-radius: 10px;
             padding: 1rem;
@@ -282,7 +292,7 @@
         }
 
         .feedback-message.mastered {
-            background: rgba(77, 209, 199, 0.1);
+            background: rgba(79, 209, 199, 0.1);
             border-color: var(--accent);
             color: var(--accent);
         }
@@ -324,14 +334,13 @@
     </style>
     <script src="all-questions-complete.js"></script>
     <script src="user-data-manager.js"></script>
-    <script src="user-data-manager.js"></script>
-    <script src="app-engine-enhanced.js"></script>
+    <script src="app-engine.js"></script>
     <script src="config.js"></script>
     <script src="debug-helper.js"></script>
 </head>
 <body>
     <!-- Navigation Header -->
-    <nav class="nav-header" style="background: rgba(30, 58, 95, 0.15); backdrop-filter: blur(15px); border-bottom: 1px solid rgba(77, 209, 199, 0.2); padding: 2rem 0; position: sticky; top: 0; z-index: 100;">
+    <nav class="nav-header" style="background: rgba(15, 32, 39, 0.9); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(79, 209, 199, 0.3); padding: 2rem 0; position: sticky; top: 0; z-index: 100;">
         <div style="max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center;">
             <div style="font-size: 2.5rem; font-weight: 800; background: linear-gradient(135deg, #4fd1c7 0%, #81e6d9 100%); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Adaptive AI Tutor</div>
             <ul style="display: flex; gap: 2rem; list-style: none; margin: 0; padding: 0;">
@@ -397,6 +406,7 @@
                 return;
             }
 
+            console.log('🔄 Initializing practice session...');
             loadSubjectSelector();
         }
 
@@ -406,6 +416,8 @@
             const subjectCards = Object.entries(subjects).map(([subjectId, subjectInfo]) => {
                 const practiceQuestions = window.userDataManager.getPracticeQuestions(subjectId);
                 const stats = window.userDataManager.getPracticeStats(subjectId);
+                
+                console.log(`📊 ${subjectId} stats:`, stats);
                 
                 return `
                     <div class="subject-card" onclick="selectSubject('${subjectId}')">
@@ -423,8 +435,11 @@
         }
 
         function selectSubject(subjectId) {
+            console.log(`📚 Selected subject: ${subjectId}`);
             currentSubject = subjectId;
             practiceQuestions = window.userDataManager.getPracticeQuestions(subjectId);
+            
+            console.log(`🔍 Practice questions for ${subjectId}:`, practiceQuestions);
             
             if (practiceQuestions.length === 0) {
                 showEmptyState();
@@ -471,6 +486,8 @@
 
             currentQuestion = practiceQuestions[currentQuestionIndex];
             selectedAnswer = null;
+            
+            console.log(`📝 Loading question ${currentQuestionIndex + 1}:`, currentQuestion);
             
             const progress = currentQuestion.practiceProgress;
             const progressPercentage = (progress.correctCount / 5) * 100;
@@ -532,6 +549,8 @@
             if (!selectedAnswer) return;
             
             try {
+                console.log(`📤 Submitting answer: ${selectedAnswer} for question ${currentQuestion.id}`);
+                
                 const response = await window.apiCall.post('/api/practice/submit', {
                     student_id: window.userDataManager.studentId,
                     subject: currentSubject,
@@ -540,6 +559,7 @@
                 });
                 
                 const result = await response.json();
+                console.log('📊 Practice result:', result);
                 
                 if (result.success) {
                     showFeedback(result);
