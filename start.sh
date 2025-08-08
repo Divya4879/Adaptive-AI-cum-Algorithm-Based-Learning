@@ -1,26 +1,21 @@
 #!/bin/bash
-echo "🚀 Starting Adaptive AI Tutor - AlgoFest 2025"
+echo "🚀 Starting Adaptive AI Tutor - AlgoFest 2025 (Frontend-Only)"
 echo ""
 
-# Start backend from root
-echo "Starting backend server..."
-nohup python app.py > server.log 2>&1 &
-echo "Backend PID: $!"
-
-# Start frontend
+# Start frontend server only
 echo "Starting frontend server..."
 nohup python3 -m http.server 3000 > frontend.log 2>&1 &
 echo "Frontend PID: $!"
 
-sleep 3
+sleep 2
 echo ""
 echo "✅ Adaptive AI Tutor is running!"
 echo ""
 echo "🌐 Open in browser:"
 echo "   http://localhost:3000/dashboard.html"
 echo ""
-echo "🏆 AlgoFest Hackathon Features:"
-echo "   • Modified Leitner System (Spaced Repetition)"
-echo "   • Adaptive Level Progression"
-echo "   • Continuous Learning Flow"
-echo "   • 200 Curated Questions"
+echo "🏆 AlgoFest Features (Frontend-Only):"
+echo "   • Modified Leitner System (Pure JavaScript)"
+echo "   • Adaptive Level Progression (Client-side)"
+echo "   • 200 Questions Embedded"
+echo "   • No Backend Required!"

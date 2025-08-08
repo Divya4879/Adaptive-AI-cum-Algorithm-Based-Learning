@@ -340,6 +340,7 @@
             .question-header { flex-direction: column; gap: 1rem; }
         }
     </style>
+    <script src="questions.js"></script>
     <script src="config.js"></script>
 </head>
 <body>
@@ -434,7 +435,7 @@
                 for (const subject of Object.keys(subjects)) {
                     for (let level = 1; level <= 10; level++) {
                         try {
-                            const response = await fetch('' + API_BASE_URL + '/api/level/start', {
+                            const response = await window.apiCall.get('/api/level/start', {
                                 method: 'POST',
                                 headers: { 'Content-Type': 'application/json' },
                                 body: JSON.stringify({
