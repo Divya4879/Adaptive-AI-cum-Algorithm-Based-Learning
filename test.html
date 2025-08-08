@@ -3,299 +3,240 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Continuous Quiz - Adaptive AI Tutor</title>
+    <title>Adaptive AI Tutor - Quiz</title>
     <style>
         :root {
-            --primary: #0a1628;
-            --secondary: #1e3a5f;
+            --primary: #1a365d;
+            --secondary: #2d3748;
             --accent: #4fd1c7;
             --text: #f7fafc;
-            --text-muted: #cbd5e0;
+            --background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             --glass: rgba(30, 58, 95, 0.15);
             --border: rgba(77, 209, 199, 0.2);
-            --success: #48bb78;
-            --error: #f56565;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--background);
             color: var(--text);
             min-height: 100vh;
         }
 
-        /* Navigation Header */
-        .nav-header {
-            background: var(--glass);
-            backdrop-filter: blur(15px);
-            border-bottom: 1px solid var(--border);
-            padding: 2rem 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .nav-title {
-            font-size: 2rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--accent) 0%, #81e6d9 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: var(--text);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-
-        .nav-links a:hover {
-            color: var(--accent);
-        }
-
-        .nav-links a.active {
-            color: var(--accent);
-        }
-
         .container {
-            max-width: 900px;
+            max-width: 1000px;
             margin: 0 auto;
             padding: 2rem;
         }
 
         .quiz-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-            padding: 1.5rem;
-            background: var(--glass);
-            backdrop-filter: blur(15px);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-        }
-
-        .quiz-info h1 {
-            font-size: 1.8rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .quiz-meta {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-
-        .level-indicator {
-            text-align: right;
-        }
-
-        .current-level {
-            font-size: 2rem;
-            font-weight: 800;
-            color: var(--accent);
-            margin-bottom: 0.5rem;
-        }
-
-        .level-label {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-
-        .question-card {
             background: var(--glass);
             backdrop-filter: blur(15px);
             border: 1px solid var(--border);
             border-radius: 20px;
-            padding: 3rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .quiz-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #4fd1c7 0%, #81e6d9 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .quiz-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+        }
+
+        .info-item {
+            background: rgba(77, 209, 199, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+        }
+
+        .question-container {
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2rem;
             margin-bottom: 2rem;
         }
 
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .question-number {
+            background: var(--accent);
+            color: var(--primary);
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            font-weight: 700;
+        }
+
         .question-text {
-            font-size: 1.6rem;
+            font-size: 1.4rem;
             font-weight: 600;
-            margin-bottom: 2.5rem;
+            margin-bottom: 2rem;
             line-height: 1.6;
         }
 
-        .options-grid {
+        .options-container {
             display: grid;
             gap: 1rem;
-            margin-bottom: 2.5rem;
+            margin-bottom: 2rem;
         }
 
         .option {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid transparent;
+            border-radius: 15px;
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        .option:hover {
+            background: rgba(77, 209, 199, 0.1);
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .option.selected {
+            background: rgba(77, 209, 199, 0.2);
+            border-color: var(--accent);
+        }
+
+        .quiz-controls {
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 1rem;
-            padding: 1.5rem;
-            background: var(--glass);
-            border: 1px solid var(--border);
-            border-radius: 12px;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #4fd1c7 0%, #81e6d9 100%);
+            color: var(--primary);
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 15px;
+            font-size: 1.1rem;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.3s ease;
         }
 
-        .option:hover {
-            border-color: var(--accent);
-            background: rgba(77, 209, 199, 0.05);
-            transform: translateX(4px);
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(79, 209, 199, 0.3);
         }
 
-        .option.selected {
-            border-color: var(--accent);
-            background: rgba(77, 209, 199, 0.1);
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
         }
 
-        .option.correct {
-            border-color: var(--success);
-            background: rgba(72, 187, 120, 0.2);
+        .progress-bar {
+            background: rgba(255, 255, 255, 0.1);
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 1rem 0;
         }
 
-        .option.wrong {
-            border-color: var(--error);
-            background: rgba(245, 101, 101, 0.2);
+        .progress-fill {
+            background: linear-gradient(90deg, #4fd1c7, #81e6d9);
+            height: 100%;
+            transition: width 0.3s ease;
         }
 
-        .option-letter {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, var(--accent) 0%, #81e6d9 100%);
-            color: var(--primary);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 1.2rem;
-            flex-shrink: 0;
-        }
-
-        .option.correct .option-letter {
-            background: linear-gradient(135deg, var(--success) 0%, #68d391 100%);
-        }
-
-        .option.wrong .option-letter {
-            background: linear-gradient(135deg, var(--error) 0%, #fc8181 100%);
-        }
-
-        .option-text {
-            font-size: 1.1rem;
-            line-height: 1.4;
-            flex: 1;
-        }
-
-        /* Level Up Modal */
-        .level-up-modal {
+        .modal {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(10, 22, 40, 0.9);
+            background: rgba(0, 0, 0, 0.8);
             display: flex;
-            align-items: center;
             justify-content: center;
+            align-items: center;
             z-index: 1000;
         }
 
-        .level-up-content {
+        .modal-content {
             background: var(--glass);
-            backdrop-filter: blur(20px);
+            backdrop-filter: blur(15px);
             border: 1px solid var(--border);
             border-radius: 20px;
-            padding: 3rem;
+            padding: 2rem;
             max-width: 500px;
             width: 90%;
             text-align: center;
         }
 
-        .level-up-icon {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-        }
-
-        .level-up-title {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, var(--accent) 0%, #81e6d9 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .level-up-message {
-            font-size: 1.2rem;
-            color: var(--text-muted);
-            margin-bottom: 2rem;
-        }
-
-        .level-up-stats {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-
-        .stat-item {
-            background: rgba(77, 209, 199, 0.1);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 1rem;
-        }
-
-        .stat-value {
+        .modal-title {
             font-size: 2rem;
-            font-weight: 800;
+            font-weight: 700;
+            margin-bottom: 1rem;
             color: var(--accent);
         }
 
-        .stat-label {
-            font-size: 0.9rem;
-            color: var(--text-muted);
+        .modal-message {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            line-height: 1.6;
         }
 
-        .continue-button {
-            background: linear-gradient(135deg, var(--accent) 0%, #81e6d9 100%);
-            color: var(--primary);
-            border: none;
-            padding: 1rem 2rem;
-            border-radius: 12px;
-            font-size: 1.1rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
+        .score-display {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--accent);
+            margin: 1rem 0;
         }
 
-        .continue-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(77, 209, 199, 0.4);
+        .hidden {
+            display: none;
         }
 
-        .hidden { display: none; }
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            font-size: 1.2rem;
+        }
+
+        .error {
+            background: rgba(255, 0, 0, 0.1);
+            border: 1px solid rgba(255, 0, 0, 0.3);
+            color: #ff6b6b;
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+        }
 
         @media (max-width: 768px) {
-            .nav-container { padding: 0 1rem; }
-            .nav-links { gap: 1rem; }
             .container { padding: 1rem; }
-            .quiz-header { flex-direction: column; gap: 1rem; }
+            .quiz-title { font-size: 2rem; }
+            .quiz-info { flex-direction: column; gap: 1rem; }
+            .question-text { font-size: 1.2rem; }
         }
     </style>
     <script src="all-questions-complete.js"></script>
@@ -304,7 +245,6 @@
     <script src="debug-helper.js"></script>
 </head>
 <body>
-    <!-- Navigation Header -->
     <!-- Navigation Header -->
     <nav class="nav-header" style="background: rgba(30, 58, 95, 0.15); backdrop-filter: blur(15px); border-bottom: 1px solid rgba(77, 209, 199, 0.2); padding: 2rem 0; position: sticky; top: 0; z-index: 100;">
         <div style="max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center;">
@@ -320,245 +260,325 @@
     </nav>
 
     <div class="container">
+        <!-- Quiz Header -->
         <div class="quiz-header">
+            <div class="quiz-title">Continuous Quiz</div>
+            <p>Adaptive level progression based on your performance</p>
             <div class="quiz-info">
-                <h1 id="subject-name">Loading...</h1>
-                <div class="quiz-meta">Question <span id="current-question">1</span> of 5</div>
-            </div>
-            <div class="level-indicator">
-                <div class="current-level" id="current-level">1</div>
-                <div class="level-label">Current Level</div>
+                <div class="info-item">
+                    <strong>Subject:</strong> <span id="subject-name">Loading...</span>
+                </div>
+                <div class="info-item">
+                    <strong>Level:</strong> <span id="current-level">1</span>
+                </div>
+                <div class="info-item">
+                    <strong>Algorithm:</strong> Adaptive Progression
+                </div>
             </div>
         </div>
 
-        <div class="question-card">
-            <div class="question-text" id="question-text">Loading question...</div>
-            <div class="options-grid" id="options-grid">
-                <!-- Options will be loaded here -->
+        <!-- Loading State -->
+        <div id="loading" class="loading">
+            <div>🔄 Loading quiz questions...</div>
+        </div>
+
+        <!-- Error State -->
+        <div id="error" class="error hidden">
+            <div id="error-message"></div>
+            <button class="btn" onclick="location.reload()">Retry</button>
+        </div>
+
+        <!-- Question Container -->
+        <div id="question-container" class="question-container hidden">
+            <div class="question-header">
+                <div class="question-number" id="question-number">Question 1 of 5</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill" style="width: 20%"></div>
+                </div>
+            </div>
+
+            <div class="question-text" id="question-text">
+                Loading question...
+            </div>
+
+            <div class="options-container" id="options-container">
+                <!-- Options will be populated here -->
+            </div>
+
+            <div class="quiz-controls">
+                <button class="btn" id="prev-btn" onclick="previousQuestion()" disabled>Previous</button>
+                <button class="btn" id="next-btn" onclick="nextQuestion()" disabled>Next</button>
+                <button class="btn" id="submit-btn" onclick="submitQuiz()" style="display: none;">Submit Quiz</button>
             </div>
         </div>
     </div>
 
     <!-- Level Up Modal -->
-    <div id="level-up-modal" class="level-up-modal hidden">
-        <div class="level-up-content">
-            <div class="level-up-icon">🚀</div>
-            <div class="level-up-title" id="level-up-title">Level Up!</div>
-            <div class="level-up-message" id="level-up-message">Excellent work! Moving to next level...</div>
-            <div class="level-up-stats">
-                <div class="stat-item">
-                    <div class="stat-value" id="score-display">5/5</div>
-                    <div class="stat-label">Score</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value" id="new-level-display">2</div>
-                    <div class="stat-label">New Level</div>
-                </div>
+    <div id="level-up-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-title" id="level-up-title">Level Up!</div>
+            <div class="modal-message" id="level-up-message">Excellent work! You're ready for the next level.</div>
+            <div class="score-display" id="score-display">4/5</div>
+            <div style="margin: 1rem 0;">
+                <strong>New Level: <span id="new-level-display">2</span></strong>
             </div>
-            <button class="continue-button" id="continue-button">Continue to Next Level</button>
+            <button class="btn" id="continue-button">Continue to Next Level</button>
         </div>
     </div>
 
     <script>
         // Global variables
-        let currentQuiz = null;
+        let currentStudent = window.apiHelpers?.getStudentId() || 'student_' + Date.now();
+        let currentSubject = '';
+        let currentLevel = 1;
+        let currentQuestions = [];
         let currentQuestionIndex = 0;
         let quizAnswers = [];
-        let currentStudent = 'student_' + Date.now();
-        let currentSubject = null;
-        let currentLevel = 1;
-
-        const subjects = {
-            'frontend_web_dev': { name: 'Frontend Web Development' },
-            'backend_web_dev': { name: 'Backend Web Development' },
-            'software_engineering': { name: 'Software Engineering' },
-            'cloud_computing': { name: 'Cloud Computing' }
-        };
+        let subjects = {};
 
         // Initialize quiz
         async function initQuiz() {
-            console.log('🚀 Initializing continuous quiz...');
-            
-            // Get selected subject
-            currentSubject = localStorage.getItem('current_subject') || 'frontend_web_dev';
-            
-            // Get saved level for this subject
-            const savedLevels = JSON.parse(localStorage.getItem('subject_levels') || '{}');
-            currentLevel = savedLevels[currentSubject] || 1;
-            
-            console.log(`📚 Subject: ${currentSubject}, Starting Level: ${currentLevel}`);
-            
-            // Update UI
-            document.getElementById('subject-name').textContent = subjects[currentSubject].name;
-            document.getElementById('current-level').textContent = currentLevel;
-            
-            // Start quiz at saved level
-            await startQuiz();
+            try {
+                console.log('🚀 Initializing quiz...');
+                
+                // Wait for engine to load
+                if (typeof window.adaptiveAITutor === 'undefined') {
+                    console.log('⏳ Waiting for engine to load...');
+                    await new Promise(resolve => {
+                        const checkEngine = () => {
+                            if (typeof window.adaptiveAITutor !== 'undefined') {
+                                resolve();
+                            } else {
+                                setTimeout(checkEngine, 100);
+                            }
+                        };
+                        checkEngine();
+                    });
+                }
+
+                // Get subject from URL or default to frontend
+                const urlParams = new URLSearchParams(window.location.search);
+                currentSubject = urlParams.get('subject') || 'frontend_web_dev';
+                
+                console.log('📚 Selected subject:', currentSubject);
+                
+                // Load subjects
+                const subjectsResponse = await window.apiCall.get('/api/subjects');
+                const subjectsData = await subjectsResponse.json();
+                subjects = subjectsData.subjects;
+                
+                // Load saved level
+                const savedLevels = JSON.parse(localStorage.getItem('subject_levels') || '{}');
+                currentLevel = savedLevels[currentSubject] || 1;
+                
+                console.log(`📚 Subject: ${currentSubject}, Starting Level: ${currentLevel}`);
+                
+                // Update UI
+                document.getElementById('subject-name').textContent = subjects[currentSubject].name;
+                document.getElementById('current-level').textContent = currentLevel;
+                
+                // Start quiz at saved level
+                await startQuiz();
+                
+            } catch (error) {
+                console.error('❌ Error initializing quiz:', error);
+                showError('Failed to initialize quiz. Please refresh the page.');
+            }
         }
 
-        // Start quiz at current level
+        // Start quiz at current level - FIXED VERSION
         async function startQuiz() {
             try {
                 console.log(`🎯 Starting quiz: ${currentSubject} Level ${currentLevel}`);
                 
-                const response = await window.apiCall.get('/api/level/start', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        student_id: currentStudent,
-                        subject: currentSubject,
-                        level: currentLevel
-                    })
+                // Hide error, show loading
+                document.getElementById('error').classList.add('hidden');
+                document.getElementById('loading').classList.remove('hidden');
+                document.getElementById('question-container').classList.add('hidden');
+                
+                // FIXED: Use POST method correctly
+                const response = await window.apiCall.post('/api/level/start', {
+                    student_id: currentStudent,
+                    subject: currentSubject,
+                    level: currentLevel
                 });
-
+                
                 const data = await response.json();
-                console.log('📝 Quiz data:', data);
-
-                if (data.success) {
-                    currentQuiz = {
-                        subject: currentSubject,
-                        level: currentLevel,
-                        questions: data.questions
-                    };
-                    
+                console.log('📊 Quiz start response:', data);
+                
+                if (data.success && data.questions && data.questions.length > 0) {
+                    currentQuestions = data.questions;
                     currentQuestionIndex = 0;
                     quizAnswers = [];
+                    
+                    // Hide loading, show questions
+                    document.getElementById('loading').classList.add('hidden');
+                    document.getElementById('question-container').classList.remove('hidden');
+                    
                     loadCurrentQuestion();
+                    console.log('✅ Quiz started successfully');
                 } else {
-                    alert('Failed to start quiz: ' + data.error);
+                    throw new Error(data.error || 'No questions received');
                 }
             } catch (error) {
                 console.error('❌ Error starting quiz:', error);
-                alert('Failed to start quiz. Please try again.');
+                showError('Failed to start quiz: ' + error.message);
             }
+        }
+
+        // Show error message
+        function showError(message) {
+            document.getElementById('loading').classList.add('hidden');
+            document.getElementById('question-container').classList.add('hidden');
+            document.getElementById('error-message').textContent = message;
+            document.getElementById('error').classList.remove('hidden');
         }
 
         // Load current question
         function loadCurrentQuestion() {
-            console.log(`📖 Loading question ${currentQuestionIndex + 1}`);
-            
-            const question = currentQuiz.questions[currentQuestionIndex];
-            
-            // Update question number
-            document.getElementById('current-question').textContent = currentQuestionIndex + 1;
-            
-            // Update question text
+            if (currentQuestionIndex >= currentQuestions.length) {
+                return;
+            }
+
+            const question = currentQuestions[currentQuestionIndex];
+            const totalQuestions = currentQuestions.length;
+
+            // Update question info
+            document.getElementById('question-number').textContent = `Question ${currentQuestionIndex + 1} of ${totalQuestions}`;
             document.getElementById('question-text').textContent = question.question_text;
-            
-            // Clear and load options
-            const optionsGrid = document.getElementById('options-grid');
-            optionsGrid.innerHTML = '';
-            
-            // Create option elements
+
+            // Update progress bar
+            const progress = ((currentQuestionIndex + 1) / totalQuestions) * 100;
+            document.getElementById('progress-fill').style.width = progress + '%';
+
+            // Load options
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+
             question.options.forEach((option, index) => {
                 const optionDiv = document.createElement('div');
                 optionDiv.className = 'option';
-                optionDiv.innerHTML = `
-                    <div class="option-letter">${String.fromCharCode(65 + index)}</div>
-                    <div class="option-text">${option}</div>
-                `;
-                
-                optionDiv.addEventListener('click', () => {
-                    selectOption(option, optionDiv, question.correct_answer);
-                });
-                
-                optionsGrid.appendChild(optionDiv);
+                optionDiv.textContent = option;
+                optionDiv.onclick = () => selectOption(index, optionDiv);
+                optionsContainer.appendChild(optionDiv);
             });
+
+            // Update navigation buttons
+            document.getElementById('prev-btn').disabled = currentQuestionIndex === 0;
+            
+            if (currentQuestionIndex === totalQuestions - 1) {
+                document.getElementById('next-btn').style.display = 'none';
+                document.getElementById('submit-btn').style.display = 'inline-block';
+            } else {
+                document.getElementById('next-btn').style.display = 'inline-block';
+                document.getElementById('submit-btn').style.display = 'none';
+            }
+
+            // Restore previous answer if exists
+            if (quizAnswers[currentQuestionIndex]) {
+                const selectedIndex = question.options.indexOf(quizAnswers[currentQuestionIndex]);
+                if (selectedIndex !== -1) {
+                    const options = optionsContainer.children;
+                    options[selectedIndex].classList.add('selected');
+                }
+            }
+
+            updateNextButton();
         }
 
         // Select option
-        function selectOption(selectedAnswer, element, correctAnswer) {
-            console.log('🎯 Selected:', selectedAnswer);
+        function selectOption(index, element) {
+            // Remove previous selection
+            document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
             
-            // Remove previous selections
-            document.querySelectorAll('.option').forEach(opt => {
-                opt.classList.remove('selected', 'correct', 'wrong');
-            });
-            
-            // Mark selected option
+            // Add selection to clicked option
             element.classList.add('selected');
             
             // Store answer
-            quizAnswers[currentQuestionIndex] = {
-                question_id: currentQuiz.questions[currentQuestionIndex].question_id || currentQuestionIndex,
-                answer: selectedAnswer
-            };
+            const question = currentQuestions[currentQuestionIndex];
+            quizAnswers[currentQuestionIndex] = question.options[index];
             
-            // Check if correct
-            const isCorrect = selectedAnswer === correctAnswer;
-            
-            if (isCorrect) {
-                element.classList.add('correct');
-            } else {
-                element.classList.add('wrong');
-                
-                // Highlight correct answer
-                document.querySelectorAll('.option').forEach(opt => {
-                    const optionText = opt.querySelector('.option-text').textContent;
-                    if (optionText === correctAnswer) {
-                        opt.classList.add('correct');
-                    }
-                });
-            }
-            
-            // Auto-advance after 2 seconds
-            setTimeout(() => {
-                nextQuestion();
-            }, 2000);
+            updateNextButton();
         }
 
-        // Next question or complete level
+        // Update next button state
+        function updateNextButton() {
+            const hasAnswer = quizAnswers[currentQuestionIndex] !== undefined;
+            document.getElementById('next-btn').disabled = !hasAnswer;
+            document.getElementById('submit-btn').disabled = !hasAnswer;
+        }
+
+        // Navigate to previous question
+        function previousQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                loadCurrentQuestion();
+            }
+        }
+
+        // Navigate to next question
         function nextQuestion() {
-            if (currentQuestionIndex < currentQuiz.questions.length - 1) {
+            if (currentQuestionIndex < currentQuestions.length - 1) {
                 currentQuestionIndex++;
                 loadCurrentQuestion();
-            } else {
-                completeLevel();
             }
         }
 
-        // Complete level and check progression
-        function completeLevel() {
-            // Calculate score
-            const correctCount = quizAnswers.filter((answer, index) => {
-                return answer.answer === currentQuiz.questions[index].correct_answer;
-            }).length;
+        // Submit quiz
+        async function submitQuiz() {
+            try {
+                console.log('📤 Submitting quiz...');
+                
+                // Prepare answers
+                const answers = currentQuestions.map((question, index) => ({
+                    question_id: question.id,
+                    answer: quizAnswers[index]
+                }));
+
+                // Submit to backend
+                const response = await window.apiCall.post('/api/level/submit', {
+                    student_id: currentStudent,
+                    subject: currentSubject,
+                    answers: answers
+                });
+
+                const result = await response.json();
+                console.log('📊 Quiz result:', result);
+
+                if (result.success) {
+                    handleQuizResult(result);
+                } else {
+                    throw new Error(result.error || 'Failed to submit quiz');
+                }
+            } catch (error) {
+                console.error('❌ Error submitting quiz:', error);
+                alert('Failed to submit quiz: ' + error.message);
+            }
+        }
+
+        // Handle quiz result
+        function handleQuizResult(result) {
+            const { outcome, score, level_info } = result;
             
-            const totalQuestions = currentQuiz.questions.length;
-            
-            console.log(`📊 Level ${currentLevel} completed: ${correctCount}/${totalQuestions}`);
-            
-            // Save current level as last played
-            const savedLevels = JSON.parse(localStorage.getItem('subject_levels') || '{}');
-            savedLevels[currentSubject] = currentLevel;
-            localStorage.setItem('subject_levels', JSON.stringify(savedLevels));
-            
-            // Determine level progression
-            if (correctCount >= 4) {
-                // Level up
-                const newLevel = Math.min(10, currentLevel + 1);
-                showLevelUpModal(correctCount, totalQuestions, newLevel);
-            } else if (correctCount === 3) {
-                // Retry same level
-                showRetryModal(correctCount, totalQuestions);
-            } else {
-                // Level down
-                const newLevel = Math.max(1, currentLevel - 1);
-                showLevelDownModal(correctCount, totalQuestions, newLevel);
+            if (outcome === 'level_up') {
+                showLevelUpModal(score.correct, score.total, level_info.new_level);
+            } else if (outcome === 'retry') {
+                showRetryModal(score.correct, score.total);
+            } else if (outcome === 'level_down') {
+                showLevelDownModal(score.correct, score.total, level_info.new_level);
             }
         }
 
         // Show level up modal
         function showLevelUpModal(correct, total, newLevel) {
-            document.getElementById('level-up-title').textContent = 'Level Up!';
-            document.getElementById('level-up-message').textContent = 'Excellent work! Moving to next level...';
+            document.getElementById('level-up-title').textContent = 'Level Up! 🚀';
+            document.getElementById('level-up-message').textContent = 'Excellent work! You\'re ready for the next level.';
             document.getElementById('score-display').textContent = `${correct}/${total}`;
             document.getElementById('new-level-display').textContent = newLevel;
             document.getElementById('continue-button').textContent = 'Continue to Next Level';
             
             document.getElementById('level-up-modal').classList.remove('hidden');
             
-            // Set up continue button
             document.getElementById('continue-button').onclick = () => {
                 currentLevel = newLevel;
                 document.getElementById('current-level').textContent = currentLevel;

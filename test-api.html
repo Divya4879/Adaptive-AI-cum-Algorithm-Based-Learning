@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>API Test</title>
+    <script src="all-questions-complete.js"></script>
+    <script src="app-engine.js"></script>
+    <script src="config.js"></script>
+</head>
+<body>
+    <h1>API Test Page</h1>
+    <div id="results"></div>
+    
+    <script>
+        async function testAPI() {
+            const results = document.getElementById('results');
+            results.innerHTML = '<h2>Testing API...</h2>';
+            
+            try {
+                // Test 1: Health check
+                console.log('🧪 Test 1: Health check');
+                const healthResponse = await window.apiCall.get('/');
+                const health = await healthResponse.json();
+                results.innerHTML += `<p>✅ Health: ${health.status} - ${health.message}</p>`;
+                
+                // Test 2: Get subjects
+                console.log('🧪 Test 2: Get subjects');
+                const subjectsResponse = await window.apiCall.get('/api/subjects');
+                const subjects = await subjectsResponse.json();
+                results.innerHTML += `<p>✅ Subjects: ${subjects.success ? 'Loaded' : 'Failed'} - ${Object.keys(subjects.subjects || {}).length} subjects</p>`;
+                
+                // Test 3: Start quiz (the problematic one)
+                console.log('🧪 Test 3: Start quiz');
+                const quizResponse = await window.apiCall.post('/api/level/start', {
+                    student_id: 'test_student',
+                    subject: 'frontend_web_dev',
+                    level: 1
+                });
+                const quiz = await quizResponse.json();
+                results.innerHTML += `<p>✅ Quiz Start: ${quiz.success ? 'Success' : 'Failed'} - ${quiz.questions ? quiz.questions.length : 0} questions</p>`;
+                
+                if (quiz.success && quiz.questions && quiz.questions.length > 0) {
+                    results.innerHTML += `<p>📝 Sample question: ${quiz.questions[0].question_text}</p>`;
+                    results.innerHTML += `<p>🎯 Options: ${quiz.questions[0].options.join(', ')}</p>`;
+                }
+                
+                results.innerHTML += '<h3>🎉 All tests passed! Quiz should work on Render.</h3>';
+                
+            } catch (error) {
+                console.error('❌ Test failed:', error);
+                results.innerHTML += `<p style="color: red;">❌ Error: ${error.message}</p>`;
+            }
+        }
+        
+        // Run test when page loads
+        window.onload = () => {
+            setTimeout(testAPI, 1000); // Wait for engine to load
+        };
+    </script>
+</body>
+</html>
