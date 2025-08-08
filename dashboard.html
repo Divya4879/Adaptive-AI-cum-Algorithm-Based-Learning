@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adaptive AI Tutor - Dashboard</title>
+    <style>
+        :root {
+            --primary: #0a1628;
+            --secondary: #1e3a5f;
+            --accent: #4fd1c7;
+            --text: #f7fafc;
+            --text-muted: #cbd5e0;
+            --glass: rgba(30, 58, 95, 0.15);
+            --border: rgba(77, 209, 199, 0.2);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 4rem;
+            font-size:150%;
+        }
+
+        .title {
+            font-size: 5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--accent) 0%, #81e6d9 100%);
+            background-clip: text; -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 2rem;
+        }
+
+        .subtitle {
+            font-size: 2.4rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            max-width: 70vw;
+            margin-left: auto;
+            margin-right: auto;
+            font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        }
+
+        .description {
+            font-size: 1.5rem;
+            color: lightcyan;
+            max-width: 75vw;
+            margin: 1rem auto 3rem;
+            line-height: 1.6;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .stat-card {
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        .progress-overview {
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .progress-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .subjects-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        .subject-progress {
+            background: rgba(77, 209, 199, 0.05);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .subject-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .subject-icon {
+            font-size: 2rem;
+        }
+
+        .subject-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .level-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .current-level {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .level-dots {
+            display: flex;
+            gap: 0.25rem;
+        }
+
+        .level-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(77, 209, 199, 0.2);
+        }
+
+        .level-dot.completed {
+            background: var(--accent);
+            box-shadow: 0 0 8px rgba(77, 209, 199, 0.4);
+        }
+
+        .level-dot.current {
+            background: var(--accent);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.2); }
+        }
+
+        .subject-stats {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .cta-section {
+            text-align: center;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, var(--accent) 0%, #81e6d9 100%);
+            color: var(--primary);
+            border: none;
+            padding: 1.5rem 3rem;
+            border-radius: 12px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(77, 209, 199, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 1rem; }
+            .title { font-size: 2.5rem; }
+            .subjects-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+    <script src="config.js"></script>
+</head>
+<body>
+    <!-- Navigation Header -->
+    <nav class="nav-header" style="background: rgba(30, 58, 95, 0.15); backdrop-filter: blur(15px); border-bottom: 1px solid rgba(77, 209, 199, 0.2); padding: 2rem 0; position: sticky; top: 0; z-index: 100;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center;">
+            <div style="font-size: 2.5rem; font-weight: 800; background: linear-gradient(135deg, #4fd1c7 0%, #81e6d9 100%); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Adaptive AI Tutor</div>
+            <ul style="display: flex; gap: 2rem; list-style: none; margin: 0; padding: 0;">
+                <li><a href="dashboard.html" style="color: #4fd1c7; text-decoration: none; font-weight: 600; font-size: 1.3rem;">Dashboard</a></li>
+                <li><a href="subjects.html" style="color: #f7fafc; text-decoration: none; font-weight: 600; font-size: 1.3rem;">Subjects</a></li>
+                <li><a href="test.html" style="color: #f7fafc; text-decoration: none; font-weight: 600; font-size: 1.3rem;">Quiz</a></li>
+                <li><a href="review.html" style="color: #f7fafc; text-decoration: none; font-weight: 600; font-size: 1.3rem;">Review</a></li>
+                <li><a href="spaced-repetition.html" style="color: #f7fafc; text-decoration: none; font-weight: 600; font-size: 1.3rem;">Practice</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="header">
+            <h1 class="title">🧠 Adaptive AI Tutor</h1>
+            <p class="subtitle">
+                Experience intelligent learning that adapts to your performance using advanced machine learning algorithms.
+            </p>
+            <p class="description">
+                Master 4 tech subjects with 200 unique questions, 10-level progression system, and personalized difficulty adjustment that learns from your responses.
+            </p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value" id="total-questions">200</div>
+                <div class="stat-label">Unique Questions</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">4</div>
+                <div class="stat-label">Tech Subjects</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">10</div>
+                <div class="stat-label">Levels Each</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="user-progress">0%</div>
+                <div class="stat-label">Your Progress</div>
+            </div>
+        </div>
+
+        <div class="progress-overview">
+            <h2 class="progress-title">Your Learning Progress</h2>
+            <div class="subjects-grid" id="subjects-progress">
+                <!-- Progress will be loaded here -->
+            </div>
+        </div>
+
+        <div class="progress-overview">
+            <h2 class="progress-title">Review & Practice</h2>
+            <div style="text-align: center; margin: 2rem 0;">
+                <a href="review.html" class="cta-button" style="margin-right: 1rem; background: linear-gradient(135deg, #f56565 0%, #fc8181 100%);">
+                    📚 Review Wrong Answers
+                </a>
+            </div>
+        </div>
+        <div class="cta-section">
+        </div>
+    </div>
+
+    <script>
+        // Load user progress
+        function loadProgress() {
+            const progress = JSON.parse(localStorage.getItem('adaptive_tutor_progress') || '{}');
+            const subjects = {
+                'frontend_web_dev': { name: 'Frontend Web Development', icon: '🎨' },
+                'backend_web_dev': { name: 'Backend Web Development', icon: '⚙️' },
+                'software_engineering': { name: 'Software Engineering', icon: '🏗️' },
+                'cloud_computing': { name: 'Cloud Computing', icon: '☁️' }
+            };
+
+            let totalQuestions = 0;
+            let totalCorrect = 0;
+
+            const progressGrid = document.getElementById('subjects-progress');
+            progressGrid.innerHTML = Object.entries(subjects).map(([id, subject]) => {
+                const subjectProgress = progress[id] || { current_level: 1, questions_answered: 0, total_correct: 0 };
+                const accuracy = subjectProgress.questions_answered > 0 ? 
+                    Math.round((subjectProgress.total_correct / subjectProgress.questions_answered) * 100) : 0;
+
+                totalQuestions += subjectProgress.questions_answered;
+                totalCorrect += subjectProgress.total_correct;
+
+                return `
+                    <div class="subject-progress">
+                        <div class="subject-header">
+                            <span class="subject-icon">${subject.icon}</span>
+                            <span class="subject-name">${subject.name}</span>
+                        </div>
+                        <div class="level-info">
+                            <span class="current-level">Level ${subjectProgress.current_level}</span>
+                            <div class="level-dots">
+                                ${Array.from({length: 10}, (_, i) => {
+                                    const level = i + 1;
+                                    let className = 'level-dot';
+                                    if (level < subjectProgress.current_level) className += ' completed';
+                                    else if (level === subjectProgress.current_level) className += ' current';
+                                    return `<div class="${className}"></div>`;
+                                }).join('')}
+                            </div>
+                        </div>
+                        <div class="subject-stats">
+                            <span>${subjectProgress.questions_answered} Questions</span>
+                            <span>${accuracy}% Accuracy</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            // Update overall progress
+            const overallAccuracy = totalQuestions > 0 ? Math.round((totalCorrect / totalQuestions) * 100) : 0;
+            document.getElementById('user-progress').textContent = overallAccuracy + '%';
+        }
+
+        // Initialize
+        window.onload = loadProgress;
+    </script>
+</body>
+</html>
