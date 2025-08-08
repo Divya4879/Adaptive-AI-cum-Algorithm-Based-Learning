@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Sample Data - Adaptive AI Tutor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #0f2027;
+            color: #f7fafc;
+            padding: 2rem;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(15, 32, 39, 0.8);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid rgba(79, 209, 199, 0.3);
+        }
+        h1 {
+            color: #4fd1c7;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        button {
+            background: linear-gradient(135deg, #4fd1c7 0%, #81e6d9 100%);
+            color: #0a1628;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            margin: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        button:hover {
+            transform: translateY(-2px);
+        }
+        .status {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 10px;
+            background: rgba(79, 209, 199, 0.1);
+            border: 1px solid rgba(79, 209, 199, 0.3);
+        }
+        .links {
+            margin-top: 2rem;
+            text-align: center;
+        }
+        .links a {
+            color: #4fd1c7;
+            text-decoration: none;
+            margin: 0 1rem;
+            font-weight: 600;
+        }
+        .links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+    <script src="user-data-manager-fixed.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Add Sample Data for Testing</h1>
+        <p>This page will add some sample wrong questions to test the review and practice sections.</p>
+        
+        <button onclick="addSampleData()">Add Sample Wrong Questions</button>
+        <button onclick="clearAllData()">Clear All Data</button>
+        <button onclick="showCurrentData()">Show Current Data</button>
+        
+        <div id="status" class="status" style="display: none;"></div>
+        
+        <div class="links">
+            <a href="subjects-working.html">Subjects</a>
+            <a href="review-working.html">Review</a>
+            <a href="practice-working.html">Practice</a>
+            <a href="test-fixed.html">Quiz</a>
+        </div>
+    </div>
+
+    <script>
+        function addSampleData() {
+            // Wait for user data manager
+            if (!window.userDataManager) {
+                setTimeout(addSampleData, 100);
+                return;
+            }
+
+            const sampleQuestions = [
+                {
+                    id: 'q1',
+                    question_text: 'What is the correct way to declare a variable in JavaScript?',
+                    options: ['var x = 5;', 'variable x = 5;', 'v x = 5;', 'declare x = 5;'],
+                    correct_answer: 'var x = 5;',
+                    student_answer: 'variable x = 5;',
+                    subject: 'frontend_web_dev',
+                    timestamp: new Date().toISOString()
+                },
+                {
+                    id: 'q2',
+                    question_text: 'Which HTTP method is used to retrieve data?',
+                    options: ['GET', 'POST', 'PUT', 'DELETE'],
+                    correct_answer: 'GET',
+                    student_answer: 'POST',
+                    subject: 'backend_web_dev',
+                    timestamp: new Date().toISOString()
+                },
+                {
+                    id: 'q3',
+                    question_text: 'What does CSS stand for?',
+                    options: ['Computer Style Sheets', 'Cascading Style Sheets', 'Creative Style Sheets', 'Colorful Style Sheets'],
+                    correct_answer: 'Cascading Style Sheets',
+                    student_answer: 'Computer Style Sheets',
+                    subject: 'frontend_web_dev',
+                    timestamp: new Date().toISOString()
+                }
+            ];
+
+            // Add wrong questions directly to user data
+            sampleQuestions.forEach(question => {
+                if (!window.userDataManager.userData.wrongQuestions[question.subject]) {
+                    window.userDataManager.userData.wrongQuestions[question.subject] = [];
+                }
+                
+                // Check if question already exists
+                const exists = window.userDataManager.userData.wrongQuestions[question.subject].some(q => q.id === question.id);
+                if (!exists) {
+                    window.userDataManager.userData.wrongQuestions[question.subject].push(question);
+                    
+                    // Initialize practice progress
+                    window.userDataManager.userData.practiceProgress[question.id] = {
+                        correctCount: 0,
+                        totalAttempts: 0,
+                        subject: question.subject
+                    };
+                }
+            });
+
+            // Update some stats
+            window.userDataManager.userData.totalQuestionsSolved += 10;
+            window.userDataManager.userData.totalCorrectAnswers += 7;
+            window.userDataManager.userData.totalWrongAnswers += 3;
+
+            // Update subject stats
+            ['frontend_web_dev', 'backend_web_dev'].forEach(subject => {
+                if (!window.userDataManager.userData.subjects[subject]) {
+                    window.userDataManager.userData.subjects[subject] = {
+                        name: window.userDataManager.getSubjectName(subject),
+                        currentLevel: 2,
+                        questionsSolved: 5,
+                        correctAnswers: 3,
+                        wrongAnswers: 2,
+                        accuracy: 60
+                    };
+                }
+            });
+
+            window.userDataManager.saveUserData();
+
+            document.getElementById('status').style.display = 'block';
+            document.getElementById('status').innerHTML = `
+                <h3>✅ Sample Data Added Successfully!</h3>
+                <p>Added 3 wrong questions across Frontend and Backend subjects.</p>
+                <p>You can now test the Review and Practice sections.</p>
+            `;
+        }
+
+        function clearAllData() {
+            if (!window.userDataManager) {
+                setTimeout(clearAllData, 100);
+                return;
+            }
+
+            window.userDataManager.resetAllData();
+            
+            document.getElementById('status').style.display = 'block';
+            document.getElementById('status').innerHTML = `
+                <h3>🔄 All Data Cleared</h3>
+                <p>All user data has been reset to default values.</p>
+            `;
+        }
+
+        function showCurrentData() {
+            if (!window.userDataManager) {
+                setTimeout(showCurrentData, 100);
+                return;
+            }
+
+            const userData = window.userDataManager.userData;
+            const wrongQuestions = window.userDataManager.getWrongQuestions();
+            
+            document.getElementById('status').style.display = 'block';
+            document.getElementById('status').innerHTML = `
+                <h3>📊 Current Data</h3>
+                <p><strong>Total Questions Solved:</strong> ${userData.totalQuestionsSolved}</p>
+                <p><strong>Total Correct:</strong> ${userData.totalCorrectAnswers}</p>
+                <p><strong>Total Wrong:</strong> ${userData.totalWrongAnswers}</p>
+                <p><strong>Wrong Questions by Subject:</strong></p>
+                <ul>
+                    ${Object.entries(wrongQuestions).map(([subject, questions]) => 
+                        `<li>${subject}: ${questions.length} questions</li>`
+                    ).join('')}
+                </ul>
+            `;
+        }
+    </script>
+</body>
+</html>
