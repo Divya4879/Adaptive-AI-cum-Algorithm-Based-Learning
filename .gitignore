@@ -22,7 +22,6 @@ wheels/
 MANIFEST
 
 # Virtual Environment
-backend/venv/
 venv/
 ENV/
 env/
@@ -54,6 +53,9 @@ server.log
 frontend.log
 backend.pid
 frontend.pid
+
+# Environment variables
+.env
 
 # Temporary files
 *.tmp

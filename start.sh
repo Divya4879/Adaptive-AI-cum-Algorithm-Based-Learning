@@ -2,15 +2,12 @@
 echo "🚀 Starting Adaptive AI Tutor - AlgoFest 2025"
 echo ""
 
-# Start backend
+# Start backend from root
 echo "Starting backend server..."
-cd backend
-source venv/bin/activate
 nohup python app.py > server.log 2>&1 &
 echo "Backend PID: $!"
 
 # Start frontend
-cd ..
 echo "Starting frontend server..."
 nohup python3 -m http.server 3000 > frontend.log 2>&1 &
 echo "Frontend PID: $!"
