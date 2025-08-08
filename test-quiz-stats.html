@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Quiz Stats</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #0f2027;
+            color: #f7fafc;
+            padding: 2rem;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(15, 32, 39, 0.8);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid rgba(79, 209, 199, 0.3);
+        }
+        h1 {
+            color: #4fd1c7;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        button {
+            background: linear-gradient(135deg, #4fd1c7 0%, #81e6d9 100%);
+            color: #0a1628;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            margin: 0.5rem;
+        }
+        .result {
+            margin: 1rem 0;
+            padding: 1rem;
+            border-radius: 10px;
+            background: rgba(79, 209, 199, 0.1);
+            border: 1px solid rgba(79, 209, 199, 0.3);
+        }
+        .success {
+            background: rgba(72, 187, 120, 0.1);
+            border-color: rgba(72, 187, 120, 0.3);
+            color: #48bb78;
+        }
+        .links {
+            text-align: center;
+            margin-top: 2rem;
+        }
+        .links a {
+            color: #4fd1c7;
+            text-decoration: none;
+            margin: 0 1rem;
+            font-weight: 600;
+        }
+    </style>
+    <script src="all-questions-complete.js"></script>
+    <script src="user-data-manager-fixed.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Test Quiz Stats System</h1>
+        
+        <button onclick="simulateQuiz('frontend_web_dev', 4, 5)">Simulate Frontend Quiz (4/5 correct - Level Up)</button>
+        <button onclick="simulateQuiz('backend_web_dev', 3, 5)">Simulate Backend Quiz (3/5 correct - Retry)</button>
+        <button onclick="simulateQuiz('software_engineering', 5, 5)">Simulate Software Quiz (5/5 correct - Level Up)</button>
+        <button onclick="simulateMultipleLevels()">Simulate Multiple Level Progress</button>
+        <button onclick="showCurrentStats()">Show Current Stats</button>
+        <button onclick="clearAllData()">Clear All Data</button>
+        
+        <div id="results"></div>
+        
+        <div class="links">
+            <a href="index.html">← Dashboard</a>
+            <a href="test-fixed.html">Take Real Quiz</a>
+        </div>
+    </div>
+
+    <script>
+        function addResult(message, isSuccess = true) {
+            const results = document.getElementById('results');
+            const div = document.createElement('div');
+            div.className = `result ${isSuccess ? 'success' : ''}`;
+            div.textContent = message;
+            results.appendChild(div);
+        }
+
+        function simulateQuiz(subject, correct, total) {
+            document.getElementById('results').innerHTML = '';
+            
+            try {
+                if (!window.userDataManager) {
+                    addResult('❌ User Data Manager not loaded', false);
+                    return;
+                }
+                
+                if (!window.questionsData || !window.questionsData[subject]) {
+                    addResult('❌ Questions data not loaded', false);
+                    return;
+                }
+                
+                // Get some sample questions
+                const questions = window.questionsData[subject].slice(0, total);
+                
+                // Create mock results
+                const questionResults = questions.map((question, index) => ({
+                    question_id: question.id,
+                    question_text: question.question_text,
+                    options: question.options,
+                    correct_answer: question.correct_answer,
+                    student_answer: index < correct ? question.correct_answer : question.options[1], // First 'correct' answers are right
+                    is_correct: index < correct
+                }));
+                
+                // Determine outcome
+                let outcome, newLevel = 2;
+                if (correct >= 4) {
+                    outcome = 'level_up';
+                    newLevel = 3;
+                } else if (correct >= 3) {
+                    outcome = 'retry';
+                    newLevel = 2;
+                } else {
+                    outcome = 'level_down';
+                    newLevel = 1;
+                }
+                
+                // Update user data
+                const results = {
+                    correct: correct,
+                    total: total,
+                    level_info: { new_level: newLevel },
+                    results: questionResults
+                };
+                
+                window.userDataManager.updateQuizResults(subject, results);
+                
+                addResult(`✅ Simulated ${subject} quiz: ${correct}/${total} correct, outcome: ${outcome}`);
+                addResult(`📊 Stats updated successfully!`);
+                
+            } catch (error) {
+                addResult(`❌ Error simulating quiz: ${error.message}`, false);
+            }
+        }
+
+        function showCurrentStats() {
+            document.getElementById('results').innerHTML = '';
+            
+            try {
+                const stats = window.userDataManager.getUserStats();
+                
+                addResult(`📊 Total Questions Solved: ${stats.totalQuestionsSolved}`);
+                addResult(`✅ Total Correct: ${stats.totalCorrectAnswers}`);
+                addResult(`❌ Total Wrong: ${stats.totalWrongAnswers}`);
+                addResult(`🎯 Overall Accuracy: ${Math.round(stats.overallAccuracy)}%`);
+                
+                Object.entries(stats.subjects).forEach(([subject, subjectStats]) => {
+                    addResult(`${subject}: Level ${subjectStats.currentLevel}, ${subjectStats.questionsSolved} solved, ${Math.round(subjectStats.accuracy)}% accuracy`);
+                });
+                
+            } catch (error) {
+                addResult(`❌ Error getting stats: ${error.message}`, false);
+            }
+        }
+
+        function simulateMultipleLevels() {
+            document.getElementById('results').innerHTML = '';
+            
+            try {
+                // Simulate completing several levels across different subjects
+                const simulations = [
+                    { subject: 'frontend_web_dev', correct: 4, total: 5, level: 2 },
+                    { subject: 'frontend_web_dev', correct: 5, total: 5, level: 3 },
+                    { subject: 'frontend_web_dev', correct: 4, total: 5, level: 4 },
+                    { subject: 'backend_web_dev', correct: 4, total: 5, level: 2 },
+                    { subject: 'backend_web_dev', correct: 5, total: 5, level: 3 },
+                    { subject: 'software_engineering', correct: 4, total: 5, level: 2 }
+                ];
+                
+                simulations.forEach((sim, index) => {
+                    setTimeout(() => {
+                        simulateQuizWithLevel(sim.subject, sim.correct, sim.total, sim.level);
+                        if (index === simulations.length - 1) {
+                            setTimeout(() => {
+                                addResult('🎉 Multiple levels completed! Check dashboard for realistic progress.');
+                            }, 100);
+                        }
+                    }, index * 200);
+                });
+                
+            } catch (error) {
+                addResult(`❌ Error simulating multiple levels: ${error.message}`, false);
+            }
+        }
+
+        function simulateQuizWithLevel(subject, correct, total, targetLevel) {
+            if (!window.userDataManager || !window.questionsData[subject]) return;
+            
+            const questions = window.questionsData[subject].slice(0, total);
+            const questionResults = questions.map((question, index) => ({
+                question_id: question.id,
+                question_text: question.question_text,
+                options: question.options,
+                correct_answer: question.correct_answer,
+                student_answer: index < correct ? question.correct_answer : question.options[1],
+                is_correct: index < correct
+            }));
+            
+            const results = {
+                correct: correct,
+                total: total,
+                level_info: { new_level: targetLevel },
+                results: questionResults
+            };
+            
+            window.userDataManager.updateQuizResults(subject, results);
+        }
+
+        function clearAllData() {
+            if (window.userDataManager) {
+                window.userDataManager.resetAllData();
+                addResult('🔄 All data cleared');
+            }
+        }
+
+        // Auto-show stats on load
+        window.onload = () => {
+            setTimeout(() => {
+                if (window.userDataManager) {
+                    showCurrentStats();
+                }
+            }, 1000);
+        };
+    </script>
+</body>
+</html>

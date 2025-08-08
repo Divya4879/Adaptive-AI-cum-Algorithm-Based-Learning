@@ -47,7 +47,7 @@
         }
 
         .hero-title {
-            font-size: 3.5rem;
+            font-size: 4rem;
             font-weight: 800;
             background: linear-gradient(135deg, #4fd1c7 0%, #81e6d9 100%);
             background-clip: text;
@@ -57,9 +57,11 @@
         }
 
         .hero-subtitle {
-            font-size: 1.3rem;
+            font-size: 2rem;
             opacity: 0.9;
             margin-bottom: 2rem;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: 900;
         }
 
         .stats-overview {
@@ -89,6 +91,204 @@
         .stat-label {
             font-size: 1rem;
             opacity: 0.8;
+        }
+
+        .stats-section {
+            margin-bottom: 3rem;
+        }
+
+        .primary-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .primary-stat-card {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .primary-stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(79, 209, 199, 0.2);
+            border-color: rgba(79, 209, 199, 0.5);
+        }
+
+        .primary-stat-card:hover .stat-icon {
+            transform: scale(1.1);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-icon {
+            font-size: 3rem;
+            flex-shrink: 0;
+        }
+
+        .stat-content {
+            flex: 1;
+        }
+
+        .stat-content .stat-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-content .stat-label {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .stat-sublabel {
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        .secondary-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .secondary-stat-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .secondary-stat-card:hover {
+            background: rgba(79, 209, 199, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .stat-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .stat-icon-small {
+            font-size: 1.2rem;
+        }
+
+        .stat-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            opacity: 0.8;
+        }
+
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .progress-visualization {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .progress-header h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .progress-header span {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .progress-bar-container {
+            position: relative;
+        }
+
+        .progress-bar-bg {
+            width: 100%;
+            height: 12px;
+            background: rgba(15, 32, 39, 0.5);
+            border-radius: 6px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            position: relative;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4fd1c7, #81e6d9, #4fd1c7);
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite;
+            transition: width 0.8s ease;
+            border-radius: 6px;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        .progress-milestones {
+            position: absolute;
+            top: -10px;
+            left: 0;
+            right: 0;
+            height: 32px;
+        }
+
+        .milestone {
+            position: absolute;
+            transform: translateX(-50%);
+        }
+
+        .milestone-dot {
+            width: 12px;
+            height: 12px;
+            background: var(--card-bg);
+            border: 2px solid var(--border);
+            border-radius: 50%;
+            margin: 0 auto 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .milestone-dot.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            box-shadow: 0 0 10px rgba(79, 209, 199, 0.5);
+        }
+
+        .milestone-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-align: center;
+            opacity: 0.7;
+            white-space: nowrap;
         }
 
         .subjects-section {
@@ -295,12 +495,35 @@
                 gap: 1.5rem;
             }
             .subject-stats { grid-template-columns: repeat(2, 1fr); }
-            .stats-overview { grid-template-columns: repeat(2, 1fr); }
+            .primary-stats { 
+                grid-template-columns: 1fr; 
+                gap: 1.5rem;
+            }
+            .secondary-stats { 
+                grid-template-columns: repeat(2, 1fr); 
+                gap: 1rem;
+            }
+            .primary-stat-card {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+            .milestone-label {
+                font-size: 0.7rem;
+            }
         }
 
         @media (max-width: 480px) {
             .subject-stats { grid-template-columns: 1fr; }
-            .stats-overview { grid-template-columns: 1fr; }
+            .secondary-stats { grid-template-columns: 1fr; }
+            .progress-header {
+                flex-direction: column;
+                gap: 0.5rem;
+                text-align: center;
+            }
+            .milestone-label {
+                display: none;
+            }
         }
     </style>
     <script src="all-questions-complete.js"></script>
@@ -327,26 +550,121 @@
         <!-- Hero Section -->
         <div class="hero-section">
             <h1 class="hero-title">Adaptive AI Tutor</h1>
-            <p class="hero-subtitle">Master technical skills with personalized learning and spaced repetition</p>
+            <p class="hero-subtitle">🚀 Master Technical Skills with Intelligent Adaptive Learning</p>
+            <div style="max-width: 800px; margin: 0 auto; font-size: 1.2rem; opacity: 0.9; line-height: 1.7;font-style: italic;color:#bff3ef">
+                Experience the future of personalized education with our AI-powered learning platform. 
+                Using advanced spaced repetition algorithms and adaptive difficulty progression, we transform 
+                your mistakes into mastery. Every wrong answer becomes a stepping stone to expertise through 
+                intelligent practice sessions that adapt to your learning pace.
+            </div>
+            
+            <!-- Dynamic Motivational Quote -->
+            <div id="motivational-quote" style="margin-top: 2rem; padding: 1.5rem; background: rgba(79, 209, 199, 0.1); border: 1px solid rgba(79, 209, 199, 0.3); border-radius: 15px; font-style: italic; font-size: 1.1rem;">
+                "The expert in anything was once a beginner who refused to give up." 💪
+            </div>
         </div>
 
-        <!-- Overall Stats -->
-        <div class="stats-overview">
-            <div class="stat-card">
-                <div class="stat-value" id="total-solved">0</div>
-                <div class="stat-label">Questions Solved</div>
+        <!-- Enhanced Stats Overview -->
+        <div class="stats-section">
+            <h2 class="section-title" style="margin-bottom: 2rem;">Your Learning Journey</h2>
+            
+            <!-- Primary Stats -->
+            <div class="primary-stats">
+                <div class="primary-stat-card">
+                    <div class="stat-icon">📚</div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="total-solved">0</div>
+                        <div class="stat-label">Questions Mastered</div>
+                        <div class="stat-sublabel">Total learning progress</div>
+                    </div>
+                </div>
+                
+                <div class="primary-stat-card">
+                    <div class="stat-icon">🎯</div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="overall-accuracy">0%</div>
+                        <div class="stat-label">Success Rate</div>
+                        <div class="stat-sublabel">Overall accuracy</div>
+                    </div>
+                </div>
+                
+                <div class="primary-stat-card">
+                    <div class="stat-icon">🔄</div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="questions-to-review">0</div>
+                        <div class="stat-label">Active Practice</div>
+                        <div class="stat-sublabel">Questions in review cycle</div>
+                    </div>
+                </div>
             </div>
-            <div class="stat-card">
-                <div class="stat-value" id="total-correct">0</div>
-                <div class="stat-label">Correct Answers</div>
+
+            <!-- Secondary Stats Grid -->
+            <div class="secondary-stats">
+                <div class="secondary-stat-card">
+                    <div class="stat-header">
+                        <span class="stat-icon-small">✅</span>
+                        <span class="stat-title">Correct Answers</span>
+                    </div>
+                    <div class="stat-number" id="total-correct">0</div>
+                </div>
+                
+                <div class="secondary-stat-card">
+                    <div class="stat-header">
+                        <span class="stat-icon-small">❌</span>
+                        <span class="stat-title">Learning Opportunities</span>
+                    </div>
+                    <div class="stat-number" id="total-wrong">0</div>
+                </div>
+                
+                <div class="secondary-stat-card">
+                    <div class="stat-header">
+                        <span class="stat-icon-small">⚡</span>
+                        <span class="stat-title">Study Streak</span>
+                    </div>
+                    <div class="stat-number" id="study-streak">0</div>
+                </div>
+                
+                <div class="secondary-stat-card">
+                    <div class="stat-header">
+                        <span class="stat-icon-small">🏆</span>
+                        <span class="stat-title">Mastery Level</span>
+                    </div>
+                    <div class="stat-number" id="mastery-level">Beginner</div>
+                </div>
             </div>
-            <div class="stat-card">
-                <div class="stat-value" id="overall-accuracy">0%</div>
-                <div class="stat-label">Overall Accuracy</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-value" id="questions-to-review">0</div>
-                <div class="stat-label">Questions to Review</div>
+
+            <!-- Progress Visualization -->
+            <div class="progress-visualization">
+                <div class="progress-header">
+                    <h3>Learning Progress</h3>
+                    <span id="progress-percentage">0%</span>
+                </div>
+                <div class="progress-details" style="margin-bottom: 1rem; font-size: 0.9rem; opacity: 0.8; text-align: center;">
+                    <span id="progress-breakdown">0 of 40 levels completed across all subjects</span>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill" id="progress-bar-fill" style="width: 0%"></div>
+                        <div class="progress-milestones">
+                            <div class="milestone" style="left: 25%">
+                                <div class="milestone-dot"></div>
+                                <div class="milestone-label">Novice</div>
+                            </div>
+                            <div class="milestone" style="left: 50%">
+                                <div class="milestone-dot"></div>
+                                <div class="milestone-label">Intermediate</div>
+                            </div>
+                            <div class="milestone" style="left: 75%">
+                                <div class="milestone-dot"></div>
+                                <div class="milestone-label">Advanced</div>
+                            </div>
+                            <div class="milestone" style="left: 100%">
+                                <div class="milestone-dot"></div>
+                                <div class="milestone-label">Expert</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -408,6 +726,32 @@
             }
         };
 
+        // Function to animate counter
+        function animateCounter(element, targetValue, suffix = '') {
+            const startValue = 0;
+            const duration = 1000;
+            const startTime = performance.now();
+            
+            function updateCounter(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                
+                // Easing function for smooth animation
+                const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+                const currentValue = Math.floor(startValue + (targetValue - startValue) * easeOutQuart);
+                
+                element.textContent = currentValue + suffix;
+                
+                if (progress < 1) {
+                    requestAnimationFrame(updateCounter);
+                } else {
+                    element.textContent = targetValue + suffix;
+                }
+            }
+            
+            requestAnimationFrame(updateCounter);
+        }
+
         function loadDashboard() {
             console.log('🔄 Loading dashboard...');
             
@@ -428,10 +772,10 @@
                 console.log('📊 User stats:', userStats);
                 console.log('❌ Wrong questions:', wrongQuestions);
                 
-                // Update overall stats
-                document.getElementById('total-solved').textContent = userStats.totalQuestionsSolved || 0;
-                document.getElementById('total-correct').textContent = userStats.totalCorrectAnswers || 0;
-                document.getElementById('overall-accuracy').textContent = Math.round(userStats.overallAccuracy || 0) + '%';
+                // Update overall stats with animations
+                animateCounter(document.getElementById('total-solved'), userStats.totalQuestionsSolved || 0);
+                animateCounter(document.getElementById('total-correct'), userStats.totalCorrectAnswers || 0);
+                animateCounter(document.getElementById('overall-accuracy'), Math.round(userStats.overallAccuracy || 0), '%');
                 
                 // Count questions to review
                 let totalWrongQuestions = 0;
@@ -440,7 +784,123 @@
                         totalWrongQuestions += questions.length;
                     }
                 });
-                document.getElementById('questions-to-review').textContent = totalWrongQuestions;
+                animateCounter(document.getElementById('questions-to-review'), totalWrongQuestions);
+
+                // Update secondary stats with animations
+                animateCounter(document.getElementById('total-wrong'), userStats.totalWrongAnswers || 0);
+                
+                // Calculate study streak (days since last activity)
+                const lastActivity = localStorage.getItem('lastActivityDate');
+                const today = new Date().toDateString();
+                let studyStreak = 0;
+                if (lastActivity === today) {
+                    studyStreak = parseInt(localStorage.getItem('studyStreak') || '1');
+                } else if (lastActivity) {
+                    const lastDate = new Date(lastActivity);
+                    const todayDate = new Date();
+                    const diffTime = todayDate - lastDate;
+                    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                    if (diffDays === 1) {
+                        studyStreak = parseInt(localStorage.getItem('studyStreak') || '0') + 1;
+                        localStorage.setItem('studyStreak', studyStreak.toString());
+                    } else {
+                        studyStreak = 1;
+                        localStorage.setItem('studyStreak', '1');
+                    }
+                    localStorage.setItem('lastActivityDate', today);
+                } else {
+                    studyStreak = 1;
+                    localStorage.setItem('studyStreak', '1');
+                    localStorage.setItem('lastActivityDate', today);
+                }
+                document.getElementById('study-streak').textContent = studyStreak;
+
+                // Calculate mastery level and progress - FIXED CALCULATION
+                const totalSolved = userStats.totalQuestionsSolved || 0;
+                const accuracy = userStats.overallAccuracy || 0;
+                
+                // Calculate total levels completed across all subjects
+                let totalLevelsCompleted = 0;
+                Object.values(userStats.subjects).forEach(subject => {
+                    // Each subject contributes (currentLevel - 1) completed levels
+                    totalLevelsCompleted += (subject.currentLevel - 1);
+                });
+                
+                // Total possible levels: 10 levels × 4 subjects = 40 levels
+                const totalPossibleLevels = 40;
+                const levelProgressPercentage = (totalLevelsCompleted / totalPossibleLevels) * 100;
+                
+                // Determine mastery level based on both questions solved AND levels completed
+                let masteryLevel = 'Beginner';
+                let progressPercentage = 0;
+
+                if (totalLevelsCompleted >= 30 && accuracy >= 90) {
+                    masteryLevel = 'Expert';
+                    progressPercentage = 100;
+                } else if (totalLevelsCompleted >= 20 && accuracy >= 80) {
+                    masteryLevel = 'Advanced';
+                    progressPercentage = 75;
+                } else if (totalLevelsCompleted >= 10 && accuracy >= 70) {
+                    masteryLevel = 'Intermediate';
+                    progressPercentage = 50;
+                } else if (totalLevelsCompleted >= 5 && accuracy >= 60) {
+                    masteryLevel = 'Novice';
+                    progressPercentage = 25;
+                } else {
+                    masteryLevel = 'Beginner';
+                    // Use the actual level progress percentage for beginners
+                    progressPercentage = Math.min(levelProgressPercentage, 25);
+                }
+
+                console.log(`📊 Progress calculation: ${totalLevelsCompleted}/${totalPossibleLevels} levels = ${levelProgressPercentage.toFixed(1)}%`);
+
+                document.getElementById('mastery-level').textContent = masteryLevel;
+                document.getElementById('progress-percentage').textContent = Math.round(progressPercentage) + '%';
+                document.getElementById('progress-breakdown').textContent = `${totalLevelsCompleted} of ${totalPossibleLevels} levels completed across all subjects`;
+                document.getElementById('progress-bar-fill').style.width = progressPercentage + '%';
+
+                // Update milestone dots with correct thresholds
+                document.querySelectorAll('.milestone-dot').forEach((dot, index) => {
+                    const milestoneThresholds = [25, 50, 75, 100]; // These represent mastery levels, not raw progress
+                    if (progressPercentage >= milestoneThresholds[index]) {
+                        dot.classList.add('active');
+                    } else {
+                        dot.classList.remove('active');
+                    }
+                });
+
+                // Update motivational quote based on progress
+                const quotes = {
+                    'Beginner': [
+                        "The expert in anything was once a beginner who refused to give up. 💪",
+                        "Every master was once a disaster. Keep learning! 🌱",
+                        "Your journey of a thousand miles begins with a single question. 🚀"
+                    ],
+                    'Novice': [
+                        "Progress, not perfection. You're building momentum! ⚡",
+                        "Knowledge is power, and you're gaining strength with every answer. 💡",
+                        "Small steps lead to big achievements. Keep going! 🎯"
+                    ],
+                    'Intermediate': [
+                        "You're not just learning, you're transforming. Excellent progress! 🔥",
+                        "Consistency is the mother of mastery. You're proving it! 🏆",
+                        "Your dedication is turning knowledge into wisdom. 🧠"
+                    ],
+                    'Advanced': [
+                        "Excellence is not a skill, it's an attitude. You embody it! ⭐",
+                        "You've moved from learning to mastering. Incredible journey! 🚀",
+                        "Your expertise is inspiring. Keep pushing boundaries! 💎"
+                    ],
+                    'Expert': [
+                        "Mastery achieved! You're now the inspiration for others. 👑",
+                        "From student to master - your journey exemplifies excellence! 🏅",
+                        "You've unlocked the highest level of understanding. Legendary! 🌟"
+                    ]
+                };
+
+                const levelQuotes = quotes[masteryLevel] || quotes['Beginner'];
+                const randomQuote = levelQuotes[Math.floor(Math.random() * levelQuotes.length)];
+                document.getElementById('motivational-quote').textContent = randomQuote;
 
                 // Load subjects with detailed stats
                 loadSubjects(userStats);
@@ -549,7 +1009,15 @@
         // Refresh stats when returning from other pages
         window.addEventListener('focus', () => {
             console.log('🔄 Window focused, refreshing stats...');
-            loadDashboard();
+            setTimeout(loadDashboard, 500); // Small delay to ensure data is saved
+        });
+        
+        // Also refresh when page becomes visible (for mobile)
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden) {
+                console.log('🔄 Page visible, refreshing stats...');
+                setTimeout(loadDashboard, 500);
+            }
         });
         
         window.onload = loadDashboard;

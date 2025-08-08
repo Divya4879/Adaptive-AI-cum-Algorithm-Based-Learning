@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Progress Calculation Explanation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #0f2027;
+            color: #f7fafc;
+            padding: 2rem;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: rgba(15, 32, 39, 0.8);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid rgba(79, 209, 199, 0.3);
+        }
+        h1 {
+            color: #4fd1c7;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        .subject {
+            background: rgba(30, 58, 95, 0.6);
+            border: 1px solid rgba(79, 209, 199, 0.3);
+            border-radius: 15px;
+            padding: 1rem;
+            text-align: center;
+        }
+        .subject-title {
+            color: #4fd1c7;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+        .levels {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 0.5rem;
+        }
+        .level {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+            background: rgba(15, 32, 39, 0.5);
+            border: 1px solid rgba(79, 209, 199, 0.3);
+        }
+        .level.completed {
+            background: #4fd1c7;
+            color: #0a1628;
+        }
+        .level.current {
+            background: rgba(79, 209, 199, 0.3);
+            border-color: #4fd1c7;
+            color: #4fd1c7;
+        }
+        .calculation {
+            background: rgba(79, 209, 199, 0.1);
+            border: 1px solid rgba(79, 209, 199, 0.3);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        .formula {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #4fd1c7;
+            margin: 1rem 0;
+        }
+        .example {
+            background: rgba(72, 187, 120, 0.1);
+            border: 1px solid rgba(72, 187, 120, 0.3);
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        .links {
+            text-align: center;
+            margin-top: 2rem;
+        }
+        .links a {
+            color: #4fd1c7;
+            text-decoration: none;
+            margin: 0 1rem;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 Progress Calculation - FIXED</h1>
+        
+        <div class="calculation">
+            <h2>Correct Progress Formula</h2>
+            <div class="formula">
+                Progress = (Completed Levels) ÷ (Total Possible Levels) × 100%
+            </div>
+            <div class="formula">
+                Total Possible Levels = 10 levels × 4 subjects = 40 levels
+            </div>
+        </div>
+
+        <h2>Visual Representation:</h2>
+        <div class="grid">
+            <div class="subject">
+                <div class="subject-title">🎨 Frontend</div>
+                <div class="levels">
+                    <div class="level completed">1</div>
+                    <div class="level current">2</div>
+                    <div class="level">3</div>
+                    <div class="level">4</div>
+                    <div class="level">5</div>
+                    <div class="level">6</div>
+                    <div class="level">7</div>
+                    <div class="level">8</div>
+                    <div class="level">9</div>
+                    <div class="level">10</div>
+                </div>
+            </div>
+            
+            <div class="subject">
+                <div class="subject-title">⚙️ Backend</div>
+                <div class="levels">
+                    <div class="level current">1</div>
+                    <div class="level">2</div>
+                    <div class="level">3</div>
+                    <div class="level">4</div>
+                    <div class="level">5</div>
+                    <div class="level">6</div>
+                    <div class="level">7</div>
+                    <div class="level">8</div>
+                    <div class="level">9</div>
+                    <div class="level">10</div>
+                </div>
+            </div>
+            
+            <div class="subject">
+                <div class="subject-title">🏗️ Software</div>
+                <div class="levels">
+                    <div class="level current">1</div>
+                    <div class="level">2</div>
+                    <div class="level">3</div>
+                    <div class="level">4</div>
+                    <div class="level">5</div>
+                    <div class="level">6</div>
+                    <div class="level">7</div>
+                    <div class="level">8</div>
+                    <div class="level">9</div>
+                    <div class="level">10</div>
+                </div>
+            </div>
+            
+            <div class="subject">
+                <div class="subject-title">☁️ Cloud</div>
+                <div class="levels">
+                    <div class="level current">1</div>
+                    <div class="level">2</div>
+                    <div class="level">3</div>
+                    <div class="level">4</div>
+                    <div class="level">5</div>
+                    <div class="level">6</div>
+                    <div class="level">7</div>
+                    <div class="level">8</div>
+                    <div class="level">9</div>
+                    <div class="level">10</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="example">
+            <h3>Example Calculation:</h3>
+            <p><strong>Scenario:</strong> You completed Level 1 in Frontend (now on Level 2)</p>
+            <p><strong>Completed Levels:</strong> 1 level (Frontend Level 1)</p>
+            <p><strong>Total Possible:</strong> 40 levels (10 × 4 subjects)</p>
+            <p><strong>Progress:</strong> 1 ÷ 40 × 100% = <strong>2.5%</strong> ✅</p>
+            <p><strong>NOT 25%</strong> ❌</p>
+        </div>
+
+        <div class="example">
+            <h3>Mastery Levels:</h3>
+            <p><strong>Beginner:</strong> 0-4 levels completed (0-10%)</p>
+            <p><strong>Novice:</strong> 5-9 levels completed (12.5-22.5%)</p>
+            <p><strong>Intermediate:</strong> 10-19 levels completed (25-47.5%)</p>
+            <p><strong>Advanced:</strong> 20-29 levels completed (50-72.5%)</p>
+            <p><strong>Expert:</strong> 30+ levels completed (75-100%)</p>
+        </div>
+
+        <div class="links">
+            <a href="index.html">← Dashboard (See Fixed Progress)</a>
+            <a href="test-quiz-stats.html">Test Progress System</a>
+        </div>
+    </div>
+</body>
+</html>

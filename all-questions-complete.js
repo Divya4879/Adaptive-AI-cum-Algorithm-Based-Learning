@@ -1918,3 +1918,15 @@ ALL_QUESTIONS.forEach(q => {
     subjectCounts[q.subject] = (subjectCounts[q.subject] || 0) + 1;
 });
 console.log('📊 Question distribution:', subjectCounts);
+
+// Export questions data for use in other files
+window.questionsData = {
+    'frontend_web_dev': FRONTEND_QUESTIONS,
+    'backend_web_dev': BACKEND_QUESTIONS,
+    'software_engineering': SOFTWARE_QUESTIONS,
+    'cloud_computing': CLOUD_QUESTIONS
+};
+
+window.allQuestions = ALL_QUESTIONS;
+
+console.log('🌐 Questions data exported to window.questionsData');
