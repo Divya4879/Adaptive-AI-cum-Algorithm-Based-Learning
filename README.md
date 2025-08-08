@@ -187,7 +187,7 @@ window.apiCall = {
 adaptive-ai-tutor/
 ├── 📄 README.md                    # This comprehensive guide
 ├── 📄 .gitignore                   # Git ignore rules
-├── 🌐 dashboard.html               # Main dashboard with navigation
+├── 🌐 index.html               # Main dashboard with navigation
 ├── 🌐 subjects.html                # Subject selection interface  
 ├── 🌐 test.html                    # Continuous quiz with level progression
 ├── 🌐 review.html                  # Wrong answer review system
@@ -213,7 +213,7 @@ python -m http.server 3000
 ```
 
 ### **2. Access the Application**
-- **Dashboard**: http://localhost:3000/dashboard.html
+- **Dashboard**: http://localhost:3000/index.html
 - **Take Quiz**: Choose subject → Experience adaptive algorithms
 - **Practice**: Use spaced repetition to master weak areas
 
@@ -290,13 +290,13 @@ python -m http.server 3000
 
 ## 📞 Contact & Demo
 
-**Live Demo**: http://localhost:3000/dashboard.html (after setup)
+**Live Demo**: http://localhost:3000/index.html (after setup)
 **Algorithm Focus**: Spaced repetition + Adaptive learning + Frontend-only
 **Hackathon Category**: Educational Technology with Pure Frontend Algorithms
 
 ### **Demo Instructions for Judges:**
 1. **Clone repo** → `cd adaptive-ai-tutor` → `./start.sh`
-2. **Open browser** → http://localhost:3000/dashboard.html
+2. **Open browser** → http://localhost:3000/index.html
 3. **Test algorithms** → Take quiz, use practice section
 4. **Verify offline** → Disconnect internet, still works perfectly
 

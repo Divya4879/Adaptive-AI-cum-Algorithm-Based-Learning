@@ -26,7 +26,7 @@ git push origin main
 ### **Step 3: Access Your Live Demo**
 After deployment (5-10 minutes), your URLs will be:
 
-- **🌐 Live Demo**: `https://adaptive-ai-tutor-frontend.onrender.com/dashboard.html`
+- **🌐 Live Demo**: `https://adaptive-ai-tutor-frontend.onrender.com/index.html`
 - **🔗 API**: `https://adaptive-ai-tutor-backend.onrender.com/`
 
 ## **What's Been Configured:**
@@ -38,6 +38,6 @@ After deployment (5-10 minutes), your URLs will be:
 ✅ **Requirements updated** - All dependencies included
 
 ## **For AlgoFest Judges:**
-Share this URL: `https://adaptive-ai-tutor-frontend.onrender.com/dashboard.html`
+Share this URL: `https://adaptive-ai-tutor-frontend.onrender.com/index.html`
 
 **Your Modified Leitner System is ready for the world!** 🏆

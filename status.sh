@@ -18,5 +18,5 @@ fi
 
 echo ""
 echo "🏆 AlgoFest Demo URLs:"
-echo "   📊 Dashboard: http://localhost:3000/dashboard.html"
+echo "   📊 Dashboard: http://localhost:3000/index.html"
 echo "   🧠 Practice: http://localhost:3000/spaced-repetition.html"

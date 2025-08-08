@@ -1,7 +1,13 @@
 // Complete Adaptive AI Tutor Engine with all functionalities
-// Uses ALL_QUESTIONS from all-questions-complete.js
+// Combines all 200 questions from 4 subjects with full algorithm implementation
 
-console.log('🧠 Loading Adaptive AI Tutor Engine...');
+// Combine all questions from separate files
+const ALL_QUESTIONS = [
+    ...FRONTEND_QUESTIONS,
+    ...BACKEND_QUESTIONS, 
+    ...SOFTWARE_QUESTIONS,
+    ...CLOUD_QUESTIONS
+];
 
 // Enhanced Frontend API with all requested functionalities
 class AdaptiveAITutor {
@@ -11,13 +17,6 @@ class AdaptiveAITutor {
         this.practicePool = {}; // For spaced repetition
         this.masteredQuestions = {}; // Questions mastered (5 correct answers)
         this.loadFromStorage();
-        
-        // Verify questions are loaded
-        if (typeof ALL_QUESTIONS !== 'undefined') {
-            console.log(`✅ Engine initialized with ${ALL_QUESTIONS.length} questions`);
-        } else {
-            console.error('❌ ALL_QUESTIONS not available to engine');
-        }
     }
 
     // Load data from localStorage for persistence
@@ -61,8 +60,7 @@ class AdaptiveAITutor {
                 "Spaced Repetition Practice",
                 "Progress Persistence"
             ],
-            timestamp: new Date().toISOString(),
-            questions_loaded: typeof ALL_QUESTIONS !== 'undefined' ? ALL_QUESTIONS.length : 0
+            timestamp: new Date().toISOString()
         };
     }
 
@@ -102,22 +100,15 @@ class AdaptiveAITutor {
         return {
             success: true,
             subjects: subjects,
-            total_questions: typeof ALL_QUESTIONS !== 'undefined' ? ALL_QUESTIONS.length : 0
+            total_questions: 200
         };
     }
 
     // Get exactly 5 questions for a specific level
     getQuestionsForLevel(subject, level) {
-        if (typeof ALL_QUESTIONS === 'undefined') {
-            console.error('❌ ALL_QUESTIONS not available');
-            return [];
-        }
-
         const questions = ALL_QUESTIONS.filter(q => 
             q.subject === subject && q.difficulty_level === level
         );
-
-        console.log(`🔍 Found ${questions.length} questions for ${subject} level ${level}`);
 
         if (questions.length === 0) {
             return [];
@@ -135,8 +126,6 @@ class AdaptiveAITutor {
 
     // Start level quiz
     startLevel(studentId, subject, level) {
-        console.log(`🎯 Starting level: ${studentId}, ${subject}, ${level}`);
-        
         if (!this.studentSessions[studentId]) {
             this.studentSessions[studentId] = {
                 subjects: {},
@@ -158,7 +147,6 @@ class AdaptiveAITutor {
         const questions = this.getQuestionsForLevel(subject, level);
         
         if (questions.length === 0) {
-            console.error(`❌ No questions found for ${subject} Level ${level}`);
             return {
                 success: false,
                 error: `No questions available for ${subject} Level ${level}`
@@ -176,7 +164,6 @@ class AdaptiveAITutor {
 
         this.saveToStorage();
 
-        console.log(`✅ Quiz started successfully with ${questions.length} questions`);
         return {
             success: true,
             quiz_id: quizId,
