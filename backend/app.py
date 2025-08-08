@@ -14,6 +14,7 @@ from datetime import datetime
 import pandas as pd
 
 app = Flask(__name__)
+sed -i '/app = Flask(__name__)/a from flask_cors import CORS\nCORS(app, origins=["*"], methods=["GET", "POST", "OPTIONS"], allow_headers=["Content-Type"])' app.py
 CORS(app, origins=["*"])  # Allow all origins for demo
 CORS(app)
 
