@@ -418,7 +418,22 @@
                     const subjectInfo = subjects[subject];
                     
                     const questionsHTML = questions.map((question, index) => {
-                        const optionsHTML = question.options.map(option => {
+                        console.log('🔍 Processing question:', question);
+                        
+                        // Ensure options is an array
+                        let options = question.options;
+                        if (typeof options === 'string') {
+                            try {
+                                options = JSON.parse(options);
+                            } catch (e) {
+                                options = [options];
+                            }
+                        }
+                        if (!Array.isArray(options)) {
+                            options = [];
+                        }
+                        
+                        const optionsHTML = options.map(option => {
                             let optionClass = 'neutral';
                             if (option === question.correct_answer) {
                                 optionClass = 'correct';
@@ -426,11 +441,7 @@
                                 optionClass = 'wrong';
                             }
                             
-                            return `
-                                <div class="option ${optionClass}">
-                                    ${option}
-                                </div>
-                            `;
+                            return `<div class="option ${optionClass}">${option}</div>`;
                         }).join('');
                         
                         return `
