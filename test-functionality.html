@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Functionality</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #0f2027;
+            color: #f7fafc;
+            padding: 2rem;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(15, 32, 39, 0.8);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid rgba(79, 209, 199, 0.3);
+        }
+        h1 {
+            color: #4fd1c7;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .test-result {
+            margin: 1rem 0;
+            padding: 1rem;
+            border-radius: 10px;
+            background: rgba(79, 209, 199, 0.1);
+            border: 1px solid rgba(79, 209, 199, 0.3);
+        }
+        .success {
+            background: rgba(72, 187, 120, 0.1);
+            border-color: rgba(72, 187, 120, 0.3);
+            color: #48bb78;
+        }
+        .error {
+            background: rgba(245, 101, 101, 0.1);
+            border-color: rgba(245, 101, 101, 0.3);
+            color: #f56565;
+        }
+        button {
+            background: linear-gradient(135deg, #4fd1c7 0%, #81e6d9 100%);
+            color: #0a1628;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            margin: 0.5rem;
+        }
+        .links {
+            text-align: center;
+            margin-top: 2rem;
+        }
+        .links a {
+            color: #4fd1c7;
+            text-decoration: none;
+            margin: 0 1rem;
+            font-weight: 600;
+        }
+    </style>
+    <script src="user-data-manager-fixed.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Functionality Test</h1>
+        
+        <button onclick="testUserDataManager()">Test User Data Manager</button>
+        <button onclick="testWrongQuestions()">Test Wrong Questions</button>
+        <button onclick="testPracticeQuestions()">Test Practice Questions</button>
+        
+        <div id="results"></div>
+        
+        <div class="links">
+            <a href="index.html">← Dashboard</a>
+            <a href="add-sample-data.html">Add Sample Data</a>
+            <a href="review.html">Review</a>
+            <a href="practice.html">Practice</a>
+        </div>
+    </div>
+
+    <script>
+        function addResult(message, isSuccess = true) {
+            const results = document.getElementById('results');
+            const div = document.createElement('div');
+            div.className = `test-result ${isSuccess ? 'success' : 'error'}`;
+            div.textContent = message;
+            results.appendChild(div);
+        }
+
+        function testUserDataManager() {
+            document.getElementById('results').innerHTML = '';
+            
+            try {
+                if (!window.userDataManager) {
+                    addResult('❌ User Data Manager not loaded', false);
+                    return;
+                }
+                
+                addResult('✅ User Data Manager loaded successfully');
+                
+                // Test getUserStats
+                const stats = window.userDataManager.getUserStats();
+                addResult(`✅ getUserStats() works: ${stats.totalQuestionsSolved} questions solved`);
+                
+                // Test getWrongQuestions
+                const wrongQuestions = window.userDataManager.getWrongQuestions();
+                let totalWrong = 0;
+                Object.values(wrongQuestions).forEach(questions => {
+                    if (questions && questions.length > 0) {
+                        totalWrong += questions.length;
+                    }
+                });
+                addResult(`✅ getWrongQuestions() works: ${totalWrong} wrong questions found`);
+                
+                // Test getPracticeQuestions
+                const practiceQuestions = window.userDataManager.getPracticeQuestions('frontend_web_dev');
+                addResult(`✅ getPracticeQuestions() works: ${practiceQuestions.length} practice questions for frontend`);
+                
+                // Test getPracticeStats
+                const practiceStats = window.userDataManager.getPracticeStats('frontend_web_dev');
+                addResult(`✅ getPracticeStats() works: ${practiceStats.questionsNeedingPractice} questions need practice`);
+                
+            } catch (error) {
+                addResult(`❌ Error testing User Data Manager: ${error.message}`, false);
+            }
+        }
+
+        function testWrongQuestions() {
+            document.getElementById('results').innerHTML = '';
+            
+            try {
+                const wrongQuestions = window.userDataManager.getWrongQuestions();
+                
+                Object.entries(wrongQuestions).forEach(([subject, questions]) => {
+                    if (questions && questions.length > 0) {
+                        addResult(`✅ ${subject}: ${questions.length} wrong questions`);
+                        
+                        questions.forEach((question, index) => {
+                            const hasOptions = question.options && Array.isArray(question.options) && question.options.length > 0;
+                            const hasValidOptions = hasOptions && question.options.some(opt => opt && opt.trim() !== '');
+                            
+                            if (hasValidOptions) {
+                                addResult(`  ✅ Question ${index + 1}: Has ${question.options.length} valid options`);
+                            } else {
+                                addResult(`  ❌ Question ${index + 1}: Missing or empty options`, false);
+                            }
+                        });
+                    }
+                });
+                
+            } catch (error) {
+                addResult(`❌ Error testing wrong questions: ${error.message}`, false);
+            }
+        }
+
+        function testPracticeQuestions() {
+            document.getElementById('results').innerHTML = '';
+            
+            try {
+                Object.keys({
+                    'frontend_web_dev': 'Frontend',
+                    'backend_web_dev': 'Backend',
+                    'software_engineering': 'Software Engineering',
+                    'cloud_computing': 'Cloud Computing'
+                }).forEach(subject => {
+                    const practiceQuestions = window.userDataManager.getPracticeQuestions(subject);
+                    const stats = window.userDataManager.getPracticeStats(subject);
+                    
+                    addResult(`✅ ${subject}: ${practiceQuestions.length} practice questions, ${stats.questionsNeedingPractice} need practice`);
+                    
+                    practiceQuestions.forEach((question, index) => {
+                        const hasOptions = question.options && Array.isArray(question.options) && question.options.length > 0;
+                        const hasValidOptions = hasOptions && question.options.some(opt => opt && opt.trim() !== '');
+                        
+                        if (hasValidOptions) {
+                            addResult(`  ✅ Practice Question ${index + 1}: Has ${question.options.length} valid options`);
+                        } else {
+                            addResult(`  ❌ Practice Question ${index + 1}: Missing or empty options`, false);
+                        }
+                    });
+                });
+                
+            } catch (error) {
+                addResult(`❌ Error testing practice questions: ${error.message}`, false);
+            }
+        }
+
+        // Auto-test on load
+        window.onload = () => {
+            setTimeout(() => {
+                if (window.userDataManager) {
+                    testUserDataManager();
+                } else {
+                    addResult('❌ User Data Manager not available after 1 second', false);
+                }
+            }, 1000);
+        };
+    </script>
+</body>
+</html>

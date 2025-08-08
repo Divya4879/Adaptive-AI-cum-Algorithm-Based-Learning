@@ -116,6 +116,24 @@
                     student_answer: 'Computer Style Sheets',
                     subject: 'frontend_web_dev',
                     timestamp: new Date().toISOString()
+                },
+                {
+                    id: 'q4',
+                    question_text: 'Which HTML tag is used to create a hyperlink?',
+                    options: ['<a>', '<link>', '<href>', '<url>'],
+                    correct_answer: '<a>',
+                    student_answer: '<link>',
+                    subject: 'frontend_web_dev',
+                    timestamp: new Date().toISOString()
+                },
+                {
+                    id: 'q5',
+                    question_text: 'What is the purpose of the SQL SELECT statement?',
+                    options: ['To insert data', 'To retrieve data', 'To delete data', 'To update data'],
+                    correct_answer: 'To retrieve data',
+                    student_answer: 'To insert data',
+                    subject: 'backend_web_dev',
+                    timestamp: new Date().toISOString()
                 }
             ];
 
@@ -140,9 +158,9 @@
             });
 
             // Update some stats
-            window.userDataManager.userData.totalQuestionsSolved += 10;
-            window.userDataManager.userData.totalCorrectAnswers += 7;
-            window.userDataManager.userData.totalWrongAnswers += 3;
+            window.userDataManager.userData.totalQuestionsSolved += 15;
+            window.userDataManager.userData.totalCorrectAnswers += 10;
+            window.userDataManager.userData.totalWrongAnswers += 5;
 
             // Update subject stats
             ['frontend_web_dev', 'backend_web_dev'].forEach(subject => {
@@ -150,11 +168,18 @@
                     window.userDataManager.userData.subjects[subject] = {
                         name: window.userDataManager.getSubjectName(subject),
                         currentLevel: 2,
-                        questionsSolved: 5,
-                        correctAnswers: 3,
-                        wrongAnswers: 2,
-                        accuracy: 60
+                        questionsSolved: 8,
+                        correctAnswers: 5,
+                        wrongAnswers: 3,
+                        accuracy: 62.5
                     };
+                } else {
+                    window.userDataManager.userData.subjects[subject].questionsSolved += 8;
+                    window.userDataManager.userData.subjects[subject].correctAnswers += 5;
+                    window.userDataManager.userData.subjects[subject].wrongAnswers += 3;
+                    window.userDataManager.userData.subjects[subject].accuracy = 
+                        (window.userDataManager.userData.subjects[subject].correctAnswers / 
+                         window.userDataManager.userData.subjects[subject].questionsSolved) * 100;
                 }
             });
 
@@ -163,7 +188,8 @@
             document.getElementById('status').style.display = 'block';
             document.getElementById('status').innerHTML = `
                 <h3>✅ Sample Data Added Successfully!</h3>
-                <p>Added 3 wrong questions across Frontend and Backend subjects.</p>
+                <p>Added 5 wrong questions across Frontend and Backend subjects.</p>
+                <p>Updated stats: 15 total questions, 10 correct, 5 wrong.</p>
                 <p>You can now test the Review and Practice sections.</p>
             `;
         }

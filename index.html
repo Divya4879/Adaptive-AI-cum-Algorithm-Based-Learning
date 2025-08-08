@@ -105,8 +105,9 @@
 
         .subjects-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
             gap: 2rem;
+            max-width: 100%;
         }
 
         .subject-card {
@@ -289,8 +290,17 @@
         @media (max-width: 768px) {
             .container { padding: 1rem; }
             .hero-title { font-size: 2.5rem; }
-            .subjects-grid { grid-template-columns: 1fr; }
+            .subjects-grid { 
+                grid-template-columns: 1fr; 
+                gap: 1.5rem;
+            }
             .subject-stats { grid-template-columns: repeat(2, 1fr); }
+            .stats-overview { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 480px) {
+            .subject-stats { grid-template-columns: 1fr; }
+            .stats-overview { grid-template-columns: 1fr; }
         }
     </style>
     <script src="all-questions-complete.js"></script>
@@ -307,8 +317,8 @@
             <ul style="display: flex; gap: 2rem; list-style: none; margin: 0; padding: 0;">
                 <li><a href="index.html" style="color: #4fd1c7; text-decoration: none; font-weight: 600; font-size: 1.3rem;">Dashboard</a></li>
                 <li><a href="test-fixed.html" style="color: #f7fafc; text-decoration: none; font-weight: 600; font-size: 1.3rem;">Quiz</a></li>
-                <li><a href="review-simple.html" style="color: #f7fafc; text-decoration: none; font-weight: 600; font-size: 1.3rem;">Review</a></li>
-                <li><a href="practice-simple.html" style="color: #f7fafc; text-decoration: none; font-weight: 600; font-size: 1.3rem;">Practice</a></li>
+                <li><a href="review.html" style="color: #f7fafc; text-decoration: none; font-weight: 600; font-size: 1.3rem;">Review</a></li>
+                <li><a href="practice.html" style="color: #f7fafc; text-decoration: none; font-weight: 600; font-size: 1.3rem;">Practice</a></li>
             </ul>
         </div>
     </nav>
@@ -352,12 +362,12 @@
 
         <!-- Quick Actions -->
         <div class="quick-actions">
-            <div class="action-card" onclick="window.location.href='review-simple.html'">
+            <div class="action-card" onclick="window.location.href='review.html'">
                 <div class="action-icon">📝</div>
                 <div class="action-title">Review Wrong Answers</div>
                 <div class="action-description">Study questions you got wrong with detailed explanations</div>
             </div>
-            <div class="action-card" onclick="window.location.href='practice-simple.html'">
+            <div class="action-card" onclick="window.location.href='practice.html'">
                 <div class="action-icon">🎯</div>
                 <div class="action-title">Spaced Repetition Practice</div>
                 <div class="action-description">Master difficult questions with adaptive practice</div>
@@ -535,6 +545,13 @@
 
         // Initialize when page loads
         console.log('🚀 Dashboard page loaded, initializing...');
+        
+        // Refresh stats when returning from other pages
+        window.addEventListener('focus', () => {
+            console.log('🔄 Window focused, refreshing stats...');
+            loadDashboard();
+        });
+        
         window.onload = loadDashboard;
     </script>
 </body>
