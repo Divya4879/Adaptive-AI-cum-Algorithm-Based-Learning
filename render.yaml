@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: adaptive-ai-tutor-backend
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    rootDir: backend
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11.5"
+      - key: FLASK_ENV
+        value: production
+      - key: SETUPTOOLS_USE_DISTUTILS
+        value: stdlib
+
+  - type: web
+    name: adaptive-ai-tutor-frontend
+    env: static
+    buildCommand: echo "No build needed"
+    staticPublishPath: .
