@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navigation Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #0f2027;
+            color: #f7fafc;
+            padding: 2rem;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(15, 32, 39, 0.8);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid rgba(79, 209, 199, 0.3);
+        }
+        h1 {
+            color: #4fd1c7;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .nav-test {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        .nav-link {
+            background: linear-gradient(135deg, #4fd1c7 0%, #81e6d9 100%);
+            color: #0a1628;
+            text-decoration: none;
+            padding: 1rem;
+            border-radius: 10px;
+            font-weight: 700;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .nav-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(79, 209, 199, 0.4);
+        }
+        .status {
+            margin: 1rem 0;
+            padding: 1rem;
+            border-radius: 10px;
+            background: rgba(79, 209, 199, 0.1);
+            border: 1px solid rgba(79, 209, 199, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧭 Navigation Test</h1>
+        <p>Test all navigation links to ensure consistent header across all pages:</p>
+        
+        <div class="nav-test">
+            <a href="index.html" class="nav-link">🏠 Dashboard</a>
+            <a href="test-fixed.html" class="nav-link">📝 Quiz</a>
+            <a href="review.html" class="nav-link">🔍 Review</a>
+            <a href="practice.html" class="nav-link">🎯 Practice</a>
+            <a href="add-sample-data.html" class="nav-link">🔧 Add Data</a>
+        </div>
+        
+        <div class="status">
+            <h3>✅ What to Check:</h3>
+            <ul>
+                <li>Each page has the same navigation header</li>
+                <li>Current page is highlighted in cyan (#4fd1c7)</li>
+                <li>Other pages are in white (#f7fafc)</li>
+                <li>Header is responsive on mobile</li>
+                <li>All links work correctly</li>
+            </ul>
+        </div>
+        
+        <div class="status">
+            <h3>📱 Mobile Test:</h3>
+            <p>Resize browser window to test responsive navigation</p>
+        </div>
+    </div>
+</body>
+</html>

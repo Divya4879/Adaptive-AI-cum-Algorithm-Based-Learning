@@ -59,10 +59,32 @@
         .links a:hover {
             text-decoration: underline;
         }
+        
+        @media (max-width: 768px) {
+            .container { padding: 1rem; }
+            
+            /* Navigation responsive */
+            .nav-header div:first-child { font-size: 2rem !important; }
+            .nav-header ul { flex-direction: column; gap: 1rem; text-align: center; }
+            .nav-header > div { flex-direction: column; gap: 1rem; }
+        }
     </style>
     <script src="user-data-manager-fixed.js"></script>
 </head>
 <body>
+    <!-- Navigation Header -->
+    <nav class="nav-header" style="background: rgba(15, 32, 39, 0.9); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(79, 209, 199, 0.3); padding: 2rem 0; position: sticky; top: 0; z-index: 100;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center;">
+            <div style="font-size: 2.5rem; font-weight: 800; background: linear-gradient(135deg, #4fd1c7 0%, #81e6d9 100%); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Adaptive AI Tutor</div>
+            <ul style="display: flex; gap: 2rem; list-style: none; margin: 0; padding: 0;">
+                <li><a href="index.html" style="color: #f7fafc; text-decoration: none; font-weight: 600; font-size: 1.3rem;">Dashboard</a></li>
+                <li><a href="test-fixed.html" style="color: #f7fafc; text-decoration: none; font-weight: 600; font-size: 1.3rem;">Quiz</a></li>
+                <li><a href="review.html" style="color: #f7fafc; text-decoration: none; font-weight: 600; font-size: 1.3rem;">Review</a></li>
+                <li><a href="practice.html" style="color: #f7fafc; text-decoration: none; font-weight: 600; font-size: 1.3rem;">Practice</a></li>
+            </ul>
+        </div>
+    </nav>
+
     <div class="container">
         <h1>Add Sample Data for Testing</h1>
         <p>This page will add some sample wrong questions to test the review and practice sections.</p>
@@ -72,13 +94,6 @@
         <button onclick="showCurrentData()">Show Current Data</button>
         
         <div id="status" class="status" style="display: none;"></div>
-        
-        <div class="links">
-            <a href="subjects-working.html">Subjects</a>
-            <a href="review-working.html">Review</a>
-            <a href="practice-working.html">Practice</a>
-            <a href="test-fixed.html">Quiz</a>
-        </div>
     </div>
 
     <script>
